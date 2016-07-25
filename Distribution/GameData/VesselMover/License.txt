@@ -1,0 +1,10 @@
+This KSP Addon is distributed under the MIT license.
+
+https://opensource.org/licenses/MIT
+
+Original Author: Paolo Encarnacion (BahamutoD)
+Current Author:  Joe Korinek (Papa_Joe)
+Original Source: https://github.com/BahamutoD/VesselMover
+Current Source: https://github.com/PapaJoesSoup/VesselMover
+
+Vessel spawner code is a modified version of SpawnVessel by nightingale (Contract Configurator)

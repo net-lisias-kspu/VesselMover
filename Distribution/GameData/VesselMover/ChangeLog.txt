@@ -1,0 +1,35 @@
+v1.5.1
+- KSP 1.1.3 compatibility
+- Fixed: Bug in Spawn Vessel where kerbal created was type Unowned.  would get lost and would disappear.  Changed to Type Crew.
+
+v1.5
+- KSP 1.1 compatibility
+
+v1.4
+- Toolbar menu
+- Disabled alt-p hotkey (please use toolbar UI)
+- Vessel spawner (experimental)
+
+v1.3
+- Prevent pickup when vessel is packed (causes vessel to drop when released)
+
+v1.2
+- Added functions to auto-level planes and rockets (Translate fwd/back keys, H and N default)
+- Launch clamps will automatically release when you attempt to pick up a craft that is clamped
+- Fixed controls inverting when looking straight down
+- Tweaked surface detection radius
+
+v1.1
+- Added change log
+- Added slow and ludicrous speed modes (press tab to toggle)
+- Added other rotational axes (QE is now roll, IK is pitch JL is yaw)
+- Changed input bindings to use your settings for attitude and translation control to support non-QWERTY keyboards
+- Changed controls to follow cardinal directions when in map mode
+- Fixed surface relative rotation
+- Fixed and improved vessel size calculations
+- Vessel size calculations update when vessel is rotated
+- Smoother pick-up action
+- Faster yet more gentle put-down action
+
+v1.0
+- Release
