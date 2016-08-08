@@ -22,7 +22,7 @@ namespace VesselMover
 		public static VesselMove instance;
 
 
-		public enum MoveModes{Normal = 0, Slow = 1, Ludicrous = 2}
+		public enum MoveModes{Normal = 0, Slow = 1, Fine = 2, Ludicrous = 3}
 		MoveModes moveMode = MoveModes.Normal;
 
 		bool moving = false;
@@ -31,7 +31,7 @@ namespace VesselMover
 		public float moveHeight = 0;
 
 
-		float[] hoverHeights = new float[]{35, 15, 3000};
+		float[] hoverHeights = new float[]{35, 15, 5, 3000};
 		float hoverHeight
 		{
 			get
@@ -40,7 +40,7 @@ namespace VesselMover
 			}
 		}
 
-		float[] moveSpeeds = new float[]{10, 0.5f, 1500};
+		float[] moveSpeeds = new float[]{10, 0.5f, 0.1f, 1500};
 		float moveSpeed
 		{
 			get
@@ -49,7 +49,7 @@ namespace VesselMover
 			}
 		}
 
-		float[] moveAccels = new float[]{10, 1, 750};
+		float[] moveAccels = new float[]{10, 1, 0.5f, 750};
 		float moveAccel
 		{
 			get
@@ -58,7 +58,7 @@ namespace VesselMover
 			}
 		}
 
-		float[] rotationSpeeds = new float[]{50, 20, 50};
+		float[] rotationSpeeds = new float[]{50, 20, 10, 50};
 		float rotationSpeed
 		{
 			get
@@ -300,7 +300,7 @@ namespace VesselMover
 			PQS bodyPQS = movingVessel.mainBody.pqsController;
 			double Lat = geoCoords.x;
 			double Lng = geoCoords.y;
-			var bodyUpVector = new Vector3d(1,0,0);
+			Vector3d bodyUpVector = new Vector3d(1,0,0);
 			bodyUpVector = QuaternionD.AngleAxis(Lat, Vector3d.forward/*around Z axis*/) * bodyUpVector;
 			bodyUpVector = QuaternionD.AngleAxis(Lng, Vector3d.down/*around -Y axis*/) * bodyUpVector;
 			double srfHeight = bodyPQS.GetSurfaceHeight(bodyUpVector);
@@ -377,7 +377,7 @@ namespace VesselMover
 			if(!placingVessels.Contains(v) && v.LandedOrSplashed)
 			{
 				//temp
-				foreach(var clamp in v.FindPartModulesImplementing<LaunchClamp>())
+				foreach(LaunchClamp clamp in v.FindPartModulesImplementing<LaunchClamp>())
 				{
 					if(forceReleaseClamps)
 					{
@@ -546,7 +546,10 @@ namespace VesselMover
 			case MoveModes.Slow:
 				debugLr.material.SetColor("_EmissiveColor", XKCDColors.Orange);
 				break;
-			case MoveModes.Ludicrous:
+        case MoveModes.Fine:
+          debugLr.material.SetColor("_EmissiveColor", XKCDColors.BrightRed);
+          break;
+        case MoveModes.Ludicrous:
 				debugLr.material.SetColor("_EmissiveColor", XKCDColors.PurpleishBlue);
 				break;
 			}
@@ -625,10 +628,10 @@ namespace VesselMover
 					//if(Vector3.Dot(up, p.transform.position-vessel.CoM) < 0)
 					//{
 						
-						foreach(var mf in p.GetComponentsInChildren<MeshFilter>())
+						foreach(MeshFilter mf in p.GetComponentsInChildren<MeshFilter>())
 						{
 							Mesh mesh = mf.mesh;
-							foreach(var vert in mesh.vertices)
+							foreach(Vector3 vert in mesh.vertices)
 							{
 								//bottom check
 								Vector3 worldVertPoint = mf.transform.TransformPoint(vert);

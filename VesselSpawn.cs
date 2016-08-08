@@ -407,7 +407,7 @@ namespace VesselMover
 				// Create the ship's parts
 
 				List<ConfigNode> partNodesL = new List<ConfigNode>();
-				foreach(var snapShot in dummyProto.protoPartSnapshots)
+				foreach(ProtoPartSnapshot snapShot in dummyProto.protoPartSnapshots)
 				{
 					ConfigNode node = new ConfigNode("PART");
 					snapShot.Save(node);
@@ -450,7 +450,7 @@ namespace VesselMover
 				foreach (CrewData cd in vesselData.crew)
 				{
 					// Create the ProtoCrewMember
-					ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Unowned);
+					ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
 					if (cd.name != null)
 					{
 						crewMember.name = cd.name;
@@ -571,7 +571,7 @@ namespace VesselMover
 					float hgt = (shipConstruct != null ? shipConstruct.parts[0] : vesselData.craftPart.partPrefab).localRoot.attPos0.y - lowest;
 					hgt += vesselData.height;
 
-					foreach(var p in shipConstruct.Parts)
+					foreach(Part p in shipConstruct.Parts)
 					{
 						LaunchClamp lc = p.FindModuleImplementing<LaunchClamp>();
 						if(lc)
@@ -618,7 +618,7 @@ namespace VesselMover
 
 
 			//destroy prefabs
-			foreach(var p in FindObjectsOfType<Part>())
+			foreach(Part p in FindObjectsOfType<Part>())
 			{
 				if(!p.vessel)
 				{
