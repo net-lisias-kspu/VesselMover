@@ -535,7 +535,7 @@ namespace VesselMover
 
 		void ToggleMoveMode()
 		{
-			moveMode = (MoveModes)(int)Mathf.Repeat((float)moveMode+1, 3);
+			moveMode = (MoveModes)(int)Mathf.Repeat((float)moveMode+1, 4);
 			ShowModeMessage();
 
 			switch(moveMode)

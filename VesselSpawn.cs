@@ -90,7 +90,7 @@ namespace VesselMover
 		public bool openingCraftBrowser = false;
 		bool loadingCraft = false;
 		bool choosingPosition = false;
-		CraftBrowser craftBrowser;
+		CraftBrowserDialog craftBrowser;
 		public void StartVesselSpawn()
 		{
 			if(FlightGlobals.ActiveVessel && FlightGlobals.ActiveVessel.LandedOrSplashed)
@@ -107,10 +107,11 @@ namespace VesselMover
 			float height = Screen.height * 0.7f;
 			yield return null;
 
-			craftBrowser = new CraftBrowser(new Rect((Screen.width-width)/2, (Screen.height-height)/2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[]{" ("}, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
+      //craftBrowser = new CraftBrowserDialog(new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
+      craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], OnSelected, OnCancelled, false);
 		}
 
-		void OnSelected(string fullPath, string flagUrl, CraftBrowser.LoadType loadType)
+		void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
 		{
 			StartCoroutine(SpawnCraftRoutine(fullPath));
 			craftBrowser = null;
@@ -128,7 +129,8 @@ namespace VesselMover
 		{
 			if(craftBrowser != null)
 			{
-				craftBrowser.OnGUI();
+			  craftBrowser.enabled = true;
+        //craftBrowser.Start();
 			}
 
 			if(openingCraftBrowser)
@@ -453,7 +455,7 @@ namespace VesselMover
 					ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
 					if (cd.name != null)
 					{
-						crewMember.name = cd.name;
+						crewMember.KerbalRef.name = cd.name;
 					}
 
 					crewArray[i++] = crewMember;
