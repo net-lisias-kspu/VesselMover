@@ -304,9 +304,9 @@ namespace VesselMover
 			if (!vesselData.orbiting)
 			{
 				landed = true;
-				if (vesselData.altitude == null)
+				if (vesselData.altitude == null || vesselData.altitude < 0)
 				{
-					vesselData.altitude = 0;//LocationUtil.TerrainHeight(vesselData.latitude, vesselData.longitude, vesselData.body);
+					vesselData.altitude = 35;//LocationUtil.TerrainHeight(vesselData.latitude, vesselData.longitude, vesselData.body);
 				}
 
 				Vector3d pos = vesselData.body.GetWorldSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
@@ -645,6 +645,7 @@ namespace VesselMover
 			v.Landed = true;
 			v.situation = Vessel.Situations.PRELAUNCH;
 			v.GoOffRails();
+            v.IgnoreGForces(240);
 
 			//Staging.beginFlight();
 			StageManager.BeginFlight();
@@ -652,7 +653,7 @@ namespace VesselMover
 			if(moveVessel)
 			{
 				VesselMove.instance.StartMove(v, false);
-				VesselMove.instance.moveHeight = 35;
+                VesselMove.instance.moveHeight = 35;
 				yield return null;
 				if(VesselMove.instance.movingVessel == v)
 				{

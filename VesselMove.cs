@@ -144,7 +144,8 @@ namespace VesselMover
 		{
 			if(moving)
 			{
-				UpdateMove();
+                movingVessel.IgnoreGForces(240);
+                UpdateMove();
 
 				if(hasRotated && Time.time-timeBoundsUpdated > 0.2f)
 				{
@@ -160,6 +161,8 @@ namespace VesselMover
 			timeBoundsUpdated = Time.time;
 		}
 
+        float hoverAdjust = 0f;
+
 		void UpdateMove()
 		{
 			if(!movingVessel)
@@ -167,8 +170,9 @@ namespace VesselMover
 				EndMove();
 				return;
 			}
+            movingVessel.IgnoreGForces(240);
 
-			moveHeight = Mathf.Lerp(moveHeight, vBounds.bottomLength + hoverHeight, 10*Time.fixedDeltaTime);
+			moveHeight = Mathf.Lerp(moveHeight, vBounds.bottomLength + hoverHeight + hoverAdjust, 10*Time.fixedDeltaTime);
 
 			movingVessel.ActionGroups.SetGroup(KSPActionGroup.RCS, false);
 
@@ -192,6 +196,19 @@ namespace VesselMover
 
 			Vector3 offsetDirection = Vector3.zero;
 			bool inputting = false;
+
+            //Altitude Adjustment
+            if (GameSettings.THROTTLE_UP.GetKey())
+            {
+                hoverAdjust += (10f * Time.fixedDeltaTime);
+                inputting = true;
+            }
+
+            if (GameSettings.THROTTLE_DOWN.GetKey())
+            {
+                hoverAdjust += (-10f * Time.fixedDeltaTime);
+                inputting = true;
+            }
 
 			if(GameSettings.PITCH_DOWN.GetKey())
 			{
@@ -444,7 +461,10 @@ namespace VesselMover
 
 			while(v && !v.LandedOrSplashed)
 			{
-				up = (v.transform.position-FlightGlobals.currentMainBody.transform.position).normalized;
+                v.IgnoreGForces(240);
+                movingVessel.IgnoreGForces(240);
+
+                up = (v.transform.position-FlightGlobals.currentMainBody.transform.position).normalized;
 				float placeSpeed = Mathf.Clamp(((altitude-bottomLength)*2), 0.1f, maxPlacementSpeed);
 				if(placeSpeed > 3)
 				{
@@ -462,6 +482,7 @@ namespace VesselMover
 			}
 
 			placingVessels.Remove(v);
+            hoverAdjust = 0f;
 		}
 
 		void UpdateDebugLines()

@@ -3,6 +3,8 @@
 
 # Custom for Visual Studio
 *.cs     diff=csharp
+*.csproj -text merge=union
+*.sln -text merge=union
 
 # Standard to msysgit
 *.doc	 diff=astextplain
