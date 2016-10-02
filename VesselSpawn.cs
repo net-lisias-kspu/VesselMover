@@ -309,8 +309,9 @@ namespace VesselMover
 					vesselData.altitude = 35;//LocationUtil.TerrainHeight(vesselData.latitude, vesselData.longitude, vesselData.body);
 				}
 
-				Vector3d pos = vesselData.body.GetWorldSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
-
+				//Vector3d pos = vesselData.body.GetWorldSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
+                Vector3d pos = vesselData.body.GetRelSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
+                
 				vesselData.orbit = new Orbit(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, vesselData.body);
 				vesselData.orbit.UpdateFromStateVectors(pos, vesselData.body.getRFrmVel(pos), vesselData.body, Planetarium.GetUniversalTime());
 			}
@@ -633,6 +634,8 @@ namespace VesselMover
 		{
 			loadingCraft = true;
 			v.isPersistent = true;
+            v.Landed = false;
+            v.situation = Vessel.Situations.FLYING;
 			while(v.packed)
 			{
 				yield return null;
