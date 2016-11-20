@@ -85,8 +85,8 @@
     <None Include="Distribution\GameData\VesselMover\VesselMover.version" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-@echo $(Targetname)
+    <PostBuildEvent>@echo $(Targetname)
+SET ModName=VesselMover
 @echo ...
 @echo set lpath vars from LocalDev storage...
 set /p KSP_DIR=&lt;"$(ProjectDir)LocalDev\ksp_dir.txt"
@@ -95,27 +95,27 @@ set /p ZA_DIR=&lt;"$(ProjectDir)LocalDev\7za_dir.txt"
 set /p DIST_DIR=&lt;"$(ProjectDir)LocalDev\dist_dir.txt"
 
 @echo distributing $(Targetname) files...
-copy /Y "$(TargetPath)" "$(ProjectDir)Distribution\GameData\VesselMover\Plugins\"
+copy /Y "$(TargetPath)" "$(ProjectDir)Distribution\GameData\%25ModName%25\Plugins\"
 copy /Y "$(TargetPath)" "C:\Users\dlane\Dropbox\Kerbal\ModDevelopment\Release"
 
 if $(ConfigurationName) == Debug (
 @echo building $(Targetname).dll.mdb file...
 cd "$(TargetDir)"
 call "%25PDB2MDB_EXE%25" $(Targetname).dll
-copy /Y "$(TargetDir)$(Targetname).dll.mdb" "%25KSP_DIR%25\GameData\VesselMover\Plugins\"
+copy /Y "$(TargetDir)$(Targetname).dll.mdb" "%25KSP_DIR%25\GameData\%25ModName%25\Plugins\"
 )
 
 @echo deleting previous build ...
-if exist "%25DIST_DIR%25\VesselMover*.zip" del "%25DIST_DIR%25\VesselMover*.zip"
+if exist "%25DIST_DIR%25\%25ModName%25*.zip" del "%25DIST_DIR%25\%25ModName%25*.zip"
 @echo packaging new build...
-call "%25ZA_DIR%25\7za.exe" a -tzip -r  "%25DIST_DIR%25\VesselMover.@(VersionNumber)_%25DATE:~4,2%25%25DATE:~7,2%25%25DATE:~10,4%25.zip" "$(ProjectDir)Distribution\*.*"
+call "%25ZA_DIR%25\7za.exe" a -tzip -r  "%25DIST_DIR%25\%25ModName%25.@(VersionNumber)_%25DATE:~4,2%25%25DATE:~7,2%25%25DATE:~10,4%25.zip" "$(ProjectDir)Distribution\*.*"
 
 @echo Deploy $(Targetname) Distribution files to test env:  %25KSP_DIR%25\GameData...
 @echo copying:"$(SolutionDir)Distribution\GameData" to "%25KSP_DIR%25\GameData" 
 xcopy /E /Y "$(SolutionDir)Distribution\GameData" "%25KSP_DIR%25\GameData"
 
 if $(ConfigurationName) == Debug (
-copy /Y "$(TargetDir)$(Targetname).pdb" "%25KSP_DIR%25\GameData\VesselMover\Plugins\"
+copy /Y "$(TargetDir)$(Targetname).pdb" "%25KSP_DIR%25\GameData\%25ModName%25\Plugins\"
 )
 
 @echo Build/deploy complete!</PostBuildEvent>
