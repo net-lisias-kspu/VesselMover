@@ -109,19 +109,6 @@ namespace VesselMover
 
 		void Update()
 		{
-			/*
-			if((Input.GetKey(KeyCode.LeftAlt) || (Input.GetKey(KeyCode.RightAlt))) && Input.GetKeyDown(KeyCode.P))
-			{
-				if(moving)
-				{
-					EndMove();
-				}
-				else
-				{
-					StartMove(FlightGlobals.ActiveVessel, true);
-				}
-			}
-			*/
 			if(moving)
 			{
 				if(Input.GetKeyDown(KeyCode.Tab))
@@ -130,17 +117,17 @@ namespace VesselMover
 				}
 			}
 
+            if (GameSettings.TOGGLE_UI.GetKey())
+            {
+                if (isMovingVessel)
+                {
+                    debugLr.enabled = !debugLr.enabled;
+                }
+            }
 
-			/*
-			if(Input.GetKey(KeyCode.RightAlt) && Input.GetKeyDown(KeyCode.O))
-			{
-				Debug.Log("Starting spawn test");
-				VesselSpawn.instance.StartVesselSpawn();
-			}
-			*/
-		}
+        }
 
-		void FixedUpdate()
+        void FixedUpdate()
 		{
 			if(moving)
 			{
@@ -197,7 +184,7 @@ namespace VesselMover
 			Vector3 offsetDirection = Vector3.zero;
 			bool inputting = false;
 
-            //Altitude Adjustment
+		    //Altitude Adjustment
             if (GameSettings.THROTTLE_UP.GetKey())
             {
                 hoverAdjust += (10f * Time.fixedDeltaTime);
