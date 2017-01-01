@@ -9,7 +9,6 @@ namespace VesselMover
 	public class VesselMoverToolbar : MonoBehaviour
 	{
 		public static bool hasAddedButton = false;
-
 		public static bool toolbarGuiEnabled = false;
 
 		Rect toolbarRect;
@@ -19,9 +18,7 @@ namespace VesselMover
 		float toolbarLineHeight = 20;
 		float contentWidth;
 		Vector2 toolbarPosition;
-
 		Rect svRectScreenSpace;
-
 		bool showMoveHelp = false;
 		float helpHeight;
 
@@ -153,6 +150,7 @@ namespace VesselMover
 				}
 			}
 		}
+
 		public void ShowToolbarGUI()
 		{
 			VesselMoverToolbar.toolbarGuiEnabled = true;	
@@ -162,6 +160,7 @@ namespace VesselMover
 		{
 			VesselMoverToolbar.toolbarGuiEnabled = false;	
 		}
+
 		void Dummy()
 		{}
 
