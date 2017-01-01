@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace VesselMover
@@ -629,7 +630,13 @@ namespace VesselMover
 
 				foreach(Part p in vessel.parts)
 				{
-					float sqrDist = Vector3.ProjectOnPlane((p.transform.position-vessel.CoM), up).sqrMagnitude;
+                    if (p.Modules.Contains("Tailhook")) return ;
+                    if (p.Modules.Contains("Arrestwire")) return;
+                    if (p.Modules.Contains("Catapult")) return;
+                    if (p.Modules.Contains("CLLS")) return;
+                    if (p.Modules.Contains("OLS")) return;
+
+                    float sqrDist = Vector3.ProjectOnPlane((p.transform.position-vessel.CoM), up).sqrMagnitude;
 					if(sqrDist > maxSqrDist)
 					{
 						maxSqrDist = sqrDist;
@@ -647,12 +654,11 @@ namespace VesselMover
 								//bottom check
 								Vector3 worldVertPoint = mf.transform.TransformPoint(vert);
 								float bSqrDist = (downPoint-worldVertPoint).sqrMagnitude;
-								if(bSqrDist < closestSqrDist)
-								{
-									closestSqrDist = bSqrDist;
-									closestVert = worldVertPoint;
-								}
-
+                            if (bSqrDist < closestSqrDist)
+                            {
+                                closestSqrDist = bSqrDist;
+                                closestVert = worldVertPoint;
+                            }
 
 								//radius check
 								//float sqrDist = (vessel.CoM-worldVertPoint).sqrMagnitude;
@@ -711,6 +717,20 @@ namespace VesselMover
 
 		}
 
-	}
+        public static List<string> partIgnoreModules = new List<string>(9)
+        {
+            "Tailhook",
+            "Arrestwire",
+            "Catapult",
+            "CLLS",
+            "OLS"
+        };
+
+        private static bool IsPartModuleIgnored(string ModuleName)
+        {
+            return true;
+        }
+
+    }
 }
 
