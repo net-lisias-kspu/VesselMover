@@ -615,7 +615,6 @@ namespace VesselMover
 				Vector3 forward = Vector3.ProjectOnPlane(vessel.CoM-FlightCamera.fetch.mainCamera.transform.position, up).normalized; 
 				Vector3 right = Vector3.Cross(up, forward);
 
-
 				float maxSqrDist = 0;
 				Part furthestPart = null;
 
@@ -629,12 +628,12 @@ namespace VesselMover
 				float furthestSqrDist = -1;
 
 				foreach(Part p in vessel.parts)
-				{
+				{                  
                     if (p.Modules.Contains("Tailhook")) return ;
                     if (p.Modules.Contains("Arrestwire")) return;
                     if (p.Modules.Contains("Catapult")) return;
                     if (p.Modules.Contains("CLLS")) return;
-                    if (p.Modules.Contains("OLS")) return;
+                    if (p.Modules.Contains("OLS")) return;                    
 
                     float sqrDist = Vector3.ProjectOnPlane((p.transform.position-vessel.CoM), up).sqrMagnitude;
 					if(sqrDist > maxSqrDist)
