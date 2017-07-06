@@ -80,10 +80,10 @@ namespace VesselMover
 				pitch = vd.pitch;
 				roll = vd.roll;
 
-				foreach (CrewData cd in vd.crew)
-				{
-					crew.Add(new CrewData(cd));
-				}
+                foreach (CrewData cd in vd.crew)
+                    {
+                        crew.Add(new CrewData(cd));
+                    }
 			}
 		}
 
@@ -289,7 +289,11 @@ namespace VesselMover
 			newData.flagURL = HighLogic.CurrentGame.flagURL;
 			newData.owned = true;
 			newData.vesselType = VesselType.Ship;
-			newData.crew = new List<CrewData>();
+
+            if (VesselMoverToolbar.addCrewMembers)
+            {
+                newData.crew = new List<CrewData>();
+            }
 
 			SpawnVessel(newData);
 		}
@@ -373,8 +377,9 @@ namespace VesselMover
 				bool success = false;
 				Part part = shipConstruct.parts.Find(p => p.protoModuleCrew.Count < p.CrewCapacity);
 
-				// Add the crew member
-				if (part != null)
+                // Add the crew member
+                
+                if (part != null && VesselMoverToolbar.addCrewMembers)
 				{
 					// Create the ProtoCrewMember
 					ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
@@ -462,7 +467,7 @@ namespace VesselMover
 					crewArray[i++] = crewMember;
 				}
 
-				// Create part nodes
+                // Create part nodes
 				uint flightId = ShipConstruction.GetUniqueFlightID(HighLogic.CurrentGame.flightState);
 				partNodes = new ConfigNode[1];
 				partNodes[0] = ProtoVessel.CreatePartNode(vesselData.craftPart.name, flightId, crewArray);
