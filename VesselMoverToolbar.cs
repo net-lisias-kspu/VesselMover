@@ -10,8 +10,9 @@ namespace VesselMover
 	{
 		public static bool hasAddedButton = false;
 		public static bool toolbarGuiEnabled = false;
+        public static bool addCrewMembers = true;
 
-		Rect toolbarRect;
+        Rect toolbarRect;
 		float toolbarWidth = 280;
 		float toolbarHeight = 0;
 		float toolbarMargin = 6;
@@ -19,7 +20,8 @@ namespace VesselMover
 		float contentWidth;
 		Vector2 toolbarPosition;
 		Rect svRectScreenSpace;
-		bool showMoveHelp = false;
+        Rect svCrewScreenSpace;
+        bool showMoveHelp = false;
 		float helpHeight;
 
 		void Start()
@@ -66,17 +68,26 @@ namespace VesselMover
 					{
 						VesselMove.instance.StartMove(FlightGlobals.ActiveVessel, true);
 					}
-					line += 0.2f;
+                    line += 0.2f;
 
-					Rect spawnVesselRect = LineRect(ref line);
+                    Rect spawnVesselRect = LineRect(ref line);
 					svRectScreenSpace = new Rect(spawnVesselRect);
 					svRectScreenSpace.x += toolbarRect.x;
-					svRectScreenSpace.y += toolbarRect.y;
-					if(GUI.Button(spawnVesselRect, "Spawn Vessel", HighLogic.Skin.button))
-					{
-						VesselSpawn.instance.StartVesselSpawn();
+					svRectScreenSpace.y += toolbarRect.y;                                   
+
+                    if (GUI.Button(spawnVesselRect, "Spawn Vessel", HighLogic.Skin.button))
+					{                        
+                        VesselSpawn.instance.StartVesselSpawn();
 					}
-					showMoveHelp = false;
+
+                    line += .75f;
+                    Rect crewRect = LineRect(ref line);
+                    svCrewScreenSpace = new Rect(crewRect);
+                    svCrewScreenSpace.x += toolbarRect.x;
+                    svCrewScreenSpace.y += toolbarRect.y;
+                    addCrewMembers = GUI.Toggle(crewRect, addCrewMembers, "Spawn Crew");
+
+                    showMoveHelp = false;
 				}
 				else
 				{
