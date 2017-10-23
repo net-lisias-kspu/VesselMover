@@ -328,6 +328,9 @@ namespace VesselMover
                 {                    
                     movingVessel.SetPosition(waterSrfPoint + (moveHeight * up) + offset);
                 }
+
+                //update vessel situation to splashed down:
+                movingVessel.UpdateLandedSplashed();
             }
 
             //fix surface rotation
