@@ -186,10 +186,12 @@ namespace VesselMover
 			lr.material.SetColor("_TintColor", Color.green);
 			lr.material.mainTexture = Texture2D.whiteTexture;
 			lr.useWorldSpace = false;
-			lr.SetVertexCount(2);
-			lr.SetPosition(0, Vector3.zero);
-			lr.SetPosition(1, 10 * Vector3.forward);
-			lr.SetWidth(0.1f, 1f);
+
+            Vector3[] positions = new Vector3[]{ Vector3.zero , 10 * Vector3.forward };
+		    lr.SetPositions(positions);
+		    lr.positionCount = positions.Length;
+		    lr.startWidth = 0.1f;
+		    lr.endWidth = 1f;
 
 			while(true)
 			{

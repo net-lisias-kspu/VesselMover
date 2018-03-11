@@ -1,3 +1,6 @@
+v1.7
+- 1.4 recompile and upgraded to latest Unity
+
 v1.5.1.4
 - 1.2.2 recompile
 - closing issue #21 - vessel dropping below current altitude during move

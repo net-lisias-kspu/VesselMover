@@ -469,16 +469,18 @@ namespace VesselMover
 		{
 			int circleRes = 24;
 
-			debugLr.SetVertexCount(circleRes + 3);
-			for(int i = 0; i < circleRes; i++)
-			{
-				debugLr.SetPosition(i, GetBoundPoint(i, circleRes, 1));
+            Vector3[] positions = new Vector3[circleRes +3];
+            for (int i = 0; i < circleRes; i++)
+            {
+                positions[i] = GetBoundPoint(i, circleRes, 1);
 			}
-			debugLr.SetPosition(circleRes, GetBoundPoint(0, circleRes, 1));
-			debugLr.SetPosition(circleRes+1, movingVessel.CoM);
-			debugLr.SetPosition(circleRes+2, movingVessel.CoM + (moveHeight * -up));
-			//debugLr.SetPosition(circleRes+3, vBounds.bottomPoint);
-		}
+		    positions[circleRes] = GetBoundPoint(0, circleRes, 1);
+		    positions[circleRes + 1] = movingVessel.CoM;
+		    positions[circleRes + 2] = movingVessel.CoM + (moveHeight * -up);
+
+		    debugLr.positionCount = circleRes + 3;
+		    debugLr.SetPositions(positions);
+        }
 
 		Vector3 GetBoundPoint(int index, int totalPoints, float radiusFactor)
 		{
