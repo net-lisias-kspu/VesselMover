@@ -1,3 +1,13 @@
+v1.5.1.4
+- 1.2.2 recompile
+- closing issue #21 - vessel dropping below current altitude during move
+
+v1.5.1.3
+- 1.2.1 recompile
+- adding ignore gforces call on move to stabalize vessels while moving
+- Throttle up/down will now add/decrease altitude on move
+- Fixed: issue of vessel spawn in 1.2 would ignore water detection and spawn vessel on ocean floor
+
 v1.5.1.2beta
 - Updated to be compatible with KSP 1.2pr.  This is prerelease software.  not for official distribution.
 

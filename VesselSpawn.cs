@@ -80,10 +80,10 @@ namespace VesselMover
 				pitch = vd.pitch;
 				roll = vd.roll;
 
-				foreach (CrewData cd in vd.crew)
-				{
-					crew.Add(new CrewData(cd));
-				}
+                foreach (CrewData cd in vd.crew)
+                    {
+                        crew.Add(new CrewData(cd));
+                    }
 			}
 		}
 
@@ -289,7 +289,11 @@ namespace VesselMover
 			newData.flagURL = HighLogic.CurrentGame.flagURL;
 			newData.owned = true;
 			newData.vesselType = VesselType.Ship;
-			newData.crew = new List<CrewData>();
+
+            if (VesselMoverToolbar.addCrewMembers)
+            {
+                newData.crew = new List<CrewData>();
+            }
 
 			SpawnVessel(newData);
 		}
@@ -304,13 +308,14 @@ namespace VesselMover
 			if (!vesselData.orbiting)
 			{
 				landed = true;
-				if (vesselData.altitude == null)
+				if (vesselData.altitude == null || vesselData.altitude < 0)
 				{
-					vesselData.altitude = 0;//LocationUtil.TerrainHeight(vesselData.latitude, vesselData.longitude, vesselData.body);
+					vesselData.altitude = 35;//LocationUtil.TerrainHeight(vesselData.latitude, vesselData.longitude, vesselData.body);
 				}
 
-				Vector3d pos = vesselData.body.GetWorldSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
-
+				//Vector3d pos = vesselData.body.GetWorldSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
+                Vector3d pos = vesselData.body.GetRelSurfacePosition(vesselData.latitude, vesselData.longitude, vesselData.altitude.Value);
+                
 				vesselData.orbit = new Orbit(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, vesselData.body);
 				vesselData.orbit.UpdateFromStateVectors(pos, vesselData.body.getRFrmVel(pos), vesselData.body, Planetarium.GetUniversalTime());
 			}
@@ -372,8 +377,9 @@ namespace VesselMover
 				bool success = false;
 				Part part = shipConstruct.parts.Find(p => p.protoModuleCrew.Count < p.CrewCapacity);
 
-				// Add the crew member
-				if (part != null)
+                // Add the crew member
+                
+                if (part != null && VesselMoverToolbar.addCrewMembers)
 				{
 					// Create the ProtoCrewMember
 					ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
@@ -461,7 +467,7 @@ namespace VesselMover
 					crewArray[i++] = crewMember;
 				}
 
-				// Create part nodes
+                // Create part nodes
 				uint flightId = ShipConstruction.GetUniqueFlightID(HighLogic.CurrentGame.flightState);
 				partNodes = new ConfigNode[1];
 				partNodes[0] = ProtoVessel.CreatePartNode(vesselData.craftPart.name, flightId, crewArray);
@@ -633,6 +639,8 @@ namespace VesselMover
 		{
 			loadingCraft = true;
 			v.isPersistent = true;
+            v.Landed = false;
+            v.situation = Vessel.Situations.FLYING;
 			while(v.packed)
 			{
 				yield return null;
@@ -645,6 +653,7 @@ namespace VesselMover
 			v.Landed = true;
 			v.situation = Vessel.Situations.PRELAUNCH;
 			v.GoOffRails();
+            v.IgnoreGForces(240);
 
 			//Staging.beginFlight();
 			StageManager.BeginFlight();
@@ -652,7 +661,7 @@ namespace VesselMover
 			if(moveVessel)
 			{
 				VesselMove.instance.StartMove(v, false);
-				VesselMove.instance.moveHeight = 35;
+                VesselMove.instance.moveHeight = 35;
 				yield return null;
 				if(VesselMove.instance.movingVessel == v)
 				{

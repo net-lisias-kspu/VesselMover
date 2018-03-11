@@ -1,21 +1,36 @@
 {
   "NAME": "VesselMover",
-  "URL":"http://ksp-avc.cybutek.net/version.php?id=326",
-  "DOWNLOAD":"https://github.com/PapaJoesSoup/VesselMover/releases/tag/1.5.1.2",
-  "VERSION": {
-    "MAJOR": 1, 
-    "MINOR": 5,
-    "PATCH": 1,
-	  "BUILD": 2
-  },
-  "KSP_VERSION": {
-    "MAJOR": 1,
-    "MINOR": 2,
-    "PATCH": 0
-  },
-  "KSP_VERSION_MIN": {
-    "MAJOR": 1,
-	"MINOR": 2,
-	"PATCH": 0
-  }
+  "URL":"https://github.com/PapaJoesSoup/VesselMover/blob/master/Distribution/GameData/VesselMover/VesselMover.version",
+  "DOWNLOAD":"https://github.com/PapaJoesSoup/VesselMover/releases/tag/1.6.2",
+  "GITHUB":
+    {
+        "USERNAME":"PapaJoesSoup",
+        "REPOSITORY":"VesselMover",
+        "ALLOW_PRE_RELEASE":false
+    },
+    "VERSION":
+    {
+        "MAJOR":0,
+        "MINOR":1,
+        "PATCH":6,
+        "BUILD":2
+    },
+    "KSP_VERSION":
+    {
+        "MAJOR":1,
+        "MINOR":3,
+        "PATCH":1
+    },
+    "KSP_VERSION_MIN":
+    {
+        "MAJOR":1,
+        "MINOR":3,
+        "PATCH":1
+    },
+    "KSP_VERSION_MAX":
+    {
+        "MAJOR":1,
+        "MINOR":3,
+        "PATCH":9
+    }
 }
