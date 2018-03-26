@@ -10,9 +10,10 @@ namespace VesselMover
 	{
 		public static bool hasAddedButton = false;
 		public static bool toolbarGuiEnabled = false;
-        public static bool addCrewMembers = true;
+    public static bool addCrewMembers = true;
+	  public static bool ShowUI = true;
 
-        Rect toolbarRect;
+    Rect toolbarRect;
 		float toolbarWidth = 280;
 		float toolbarHeight = 0;
 		float toolbarMargin = 6;
@@ -20,24 +21,31 @@ namespace VesselMover
 		float contentWidth;
 		Vector2 toolbarPosition;
 		Rect svRectScreenSpace;
-        Rect svCrewScreenSpace;
-        bool showMoveHelp = false;
+    Rect svCrewScreenSpace;
+    bool showMoveHelp = false;
 		float helpHeight;
 
 		void Start()
 		{
+		  GameEvents.onHideUI.Add(OnHideUI);
+		  GameEvents.onShowUI.Add(OnShowUI);
 			toolbarPosition = new Vector2(Screen.width - toolbarWidth - 80, 39);
 			toolbarRect = new Rect(toolbarPosition.x, toolbarPosition.y, toolbarWidth, toolbarHeight);
 			contentWidth = toolbarWidth - (2 * toolbarMargin);
-
 			AddToolbarButton();
 		}
 
+	  void OnDestroy()
+	  {
+	    GameEvents.onHideUI.Remove(OnHideUI);
+	    GameEvents.onShowUI.Remove(OnShowUI);
+	  }
+
 		void OnGUI()
 		{
-			if(toolbarGuiEnabled && VesselMove.instance && VesselSpawn.instance && !VesselSpawn.instance.openingCraftBrowser)
+			if(ShowUI && toolbarGuiEnabled && VesselMove.instance && VesselSpawn.instance && !VesselSpawn.instance.openingCraftBrowser)
 			{
-				GUI.Window(401240, toolbarRect, ToolbarWindow, "Vessel Mover", HighLogic.Skin.window);
+			  toolbarRect = GUI.Window(401240, toolbarRect, ToolbarWindow, "Vessel Mover", HighLogic.Skin.window);
 
 				if(!VesselMove.instance.isMovingVessel)
 				{
@@ -50,7 +58,7 @@ namespace VesselMover
 				}
 				else if(showMoveHelp)
 				{
-					GUI.Window(401241, new Rect(toolbarRect.x, toolbarRect.y + toolbarRect.height, toolbarRect.width, helpHeight), MoveHelp, "Controls", HighLogic.Skin.window);
+				  GUI.Window(401241, new Rect(toolbarRect.x, toolbarRect.y + toolbarRect.height, toolbarRect.width, helpHeight), MoveHelp, "Controls", HighLogic.Skin.window);
 				}
 			}
 		}
@@ -112,9 +120,11 @@ namespace VesselMover
 			}
 
 			toolbarRect.height = (line * toolbarLineHeight) + (toolbarMargin * 2);
+		  GUI.DragWindow(new Rect(0, 0, Screen.width, 30));
+		  VMUtils.RepositionWindow(ref toolbarRect);
 		}
 
-		Rect LineRect(ref float currentLine, float heightFactor = 1)
+    Rect LineRect(ref float currentLine, float heightFactor = 1)
 		{
 			Rect rect = new Rect(toolbarMargin, toolbarMargin + (currentLine * toolbarLineHeight), contentWidth, toolbarLineHeight*heightFactor);
 			currentLine += heightFactor + 0.1f;
@@ -184,6 +194,15 @@ namespace VesselMover
 		{
 			return new Vector3(Input.mousePosition.x, Screen.height-Input.mousePosition.y, 0);
 		}
+
+	  public void OnHideUI()
+	  {
+	    ShowUI = false;
+	  }
+	  public void OnShowUI()
+	  {
+	    ShowUI = true;
+	  }
 	}
 }
 

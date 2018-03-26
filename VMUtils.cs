@@ -27,6 +27,17 @@ namespace VesselMover
 				return true;
 			}
 		}
+	  internal static void RepositionWindow(ref Rect windowPosition)
+	  {
+	    // This method uses Gui point system.
+	    if (windowPosition.x < 0) windowPosition.x = 0;
+	    if (windowPosition.y < 0) windowPosition.y = 0;
+
+	    if (windowPosition.xMax > Screen.width)
+	      windowPosition.x = Screen.width - windowPosition.width;
+	    if (windowPosition.yMax > Screen.height)
+	      windowPosition.y = Screen.height - windowPosition.height;
+	  }
 	}
 }
 

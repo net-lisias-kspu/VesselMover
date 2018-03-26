@@ -107,8 +107,10 @@ namespace VesselMover
 			float height = Screen.height * 0.7f;
 			yield return null;
 
+		  Debug.Log("[Vessel Mover] - profile:" + HighLogic.SaveFolder);
+		  Debug.Log("[Vessel Mover] - profile:" + HighLogic.CurrentGame.Title.Split(new string[] {" ("}, StringSplitOptions.None)[0]);
       //craftBrowser = new CraftBrowserDialog(new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
-      craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], OnSelected, OnCancelled, false);
+      craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.SaveFolder, OnSelected, OnCancelled, false);
 		}
 
 		void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
