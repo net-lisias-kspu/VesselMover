@@ -1,5 +1,6 @@
 v1.7
 - 1.4 recompile and upgraded to latest Unity
+- Updated AppLaungher toolbar button to support new Unity Compression.  Increased icon size to 128 x 128
 
 v1.5.1.4
 - 1.2.2 recompile
