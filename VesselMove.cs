@@ -413,6 +413,13 @@ namespace VesselMover
       debugLr.enabled = false;
     }
 
+    public void DropMove()
+    {
+      StartCoroutine(DropMoveRoutine(vBounds));
+      isMovingVessel = false;
+      debugLr.enabled = false;
+    }
+
     IEnumerator EndMoveRoutine(VesselBounds vesselBounds)
     {
       Vessel v = vesselBounds.vessel;
@@ -460,6 +467,16 @@ namespace VesselMover
       }
 
       placingVessels.Remove(v);
+      hoverAdjust = 0f;
+    }
+
+    IEnumerator DropMoveRoutine(VesselBounds vesselBounds)
+    {
+      Vessel v = vesselBounds.vessel;
+      if (!v) yield break;
+
+      moving = false;
+      moveHeight = 0;
       hoverAdjust = 0f;
     }
 
