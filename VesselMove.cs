@@ -91,7 +91,8 @@ namespace VesselMover
       debugLr = new GameObject().AddComponent<LineRenderer>();
       debugLr.material = new Material(Shader.Find("KSP/Emissive/Diffuse"));
       debugLr.material.SetColor("_EmissiveColor", Color.green);
-      debugLr.SetWidth(0.15f, 0.15f);
+      debugLr.startWidth = 0.15f;
+      debugLr.endWidth = 0.15f;
       debugLr.enabled = false;
     }
 
@@ -184,13 +185,13 @@ namespace VesselMover
       //Altitude Adjustment
       if (GameSettings.THROTTLE_UP.GetKey())
       {
-        hoverAdjust += (10f * Time.fixedDeltaTime);
+        hoverAdjust += (moveSpeed * Time.fixedDeltaTime);
         inputting = true;
       }
 
       if (GameSettings.THROTTLE_DOWN.GetKey())
       {
-        hoverAdjust += (-10f * Time.fixedDeltaTime);
+        hoverAdjust += (-moveSpeed * Time.fixedDeltaTime);
         inputting = true;
       }
 

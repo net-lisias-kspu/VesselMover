@@ -1,3 +1,7 @@
+v1.7.2.1
+ - Altered altitude adjustment to account for speed modes.  Height changes now vary with the mode.
+ - Fixed:  Choose Crew toggle not implemented yet.  Changed to hidden for now.
+ 
 v1.7.2
  - Add altitude adjust keys to help window.
  - Add drop feature to Vessel Move.  Git Issue #3  Click Drop to allow vessel to free fall.

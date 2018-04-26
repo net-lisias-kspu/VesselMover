@@ -97,7 +97,7 @@ namespace VesselMover
           svCrewScreenSpace.x += toolbarRect.x;
           svCrewScreenSpace.y += toolbarRect.y;
           addCrewMembers = GUI.Toggle(crewRect1, addCrewMembers, "Spawn Crew");
-          selectCrewMembers = GUI.Toggle(crewRect2, selectCrewMembers, "Choose Crew");
+          //selectCrewMembers = GUI.Toggle(crewRect2, selectCrewMembers, "Choose Crew");
 
           showMoveHelp = false;
         }

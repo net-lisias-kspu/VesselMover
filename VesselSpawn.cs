@@ -92,7 +92,7 @@ namespace VesselMover
     bool loadingCraft = false;
     bool choosingPosition = false;
     CraftBrowserDialog craftBrowser;
-    CrewAssignmentDialog crewBrowser;
+    //object crewBrowser;
     public void StartVesselSpawn()
     {
       if (FlightGlobals.ActiveVessel && FlightGlobals.ActiveVessel.LandedOrSplashed)
@@ -105,14 +105,15 @@ namespace VesselMover
     {
       openingCraftBrowser = true;
 
-      float width = 450;
-      float height = Screen.height * 0.7f;
+      //float width = 450;
+      //float height = Screen.height * 0.7f;
       yield return null;
 
       Debug.Log("[Vessel Mover] - profile:" + HighLogic.SaveFolder);
       Debug.Log("[Vessel Mover] - profile:" + HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0]);
       //craftBrowser = new CraftBrowserDialog(new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
       craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.SaveFolder, OnSelected, OnCancelled, false);
+      //crewBrowser = 
     }
 
     void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
@@ -331,7 +332,7 @@ namespace VesselMover
       }
 
       ConfigNode[] partNodes;
-      UntrackedObjectClass sizeClass;
+      //UntrackedObjectClass sizeClass;
       ShipConstruct shipConstruct = null;
       bool hasClamp = false;
       float lcHeight = 0;
@@ -380,7 +381,7 @@ namespace VesselMover
         }
 
         //add minimal crew
-        bool success = false;
+        //bool success = false;
         Part part = shipConstruct.parts.Find(p => p.protoModuleCrew.Count < p.CrewCapacity);
 
         // Add the crew member
@@ -447,26 +448,26 @@ namespace VesselMover
         // Estimate an object class, numbers are based on the in game description of the
         // size classes.
         float size = shipConstruct.shipSize.magnitude / 2.0f;
-        if (size < 4.0f)
-        {
-          sizeClass = UntrackedObjectClass.A;
-        }
-        else if (size < 7.0f)
-        {
-          sizeClass = UntrackedObjectClass.B;
-        }
-        else if (size < 12.0f)
-        {
-          sizeClass = UntrackedObjectClass.C;
-        }
-        else if (size < 18.0f)
-        {
-          sizeClass = UntrackedObjectClass.D;
-        }
-        else
-        {
-          sizeClass = UntrackedObjectClass.E;
-        }
+        //if (size < 4.0f)
+        //{
+        //  sizeClass = UntrackedObjectClass.A;
+        //}
+        //else if (size < 7.0f)
+        //{
+        //  sizeClass = UntrackedObjectClass.B;
+        //}
+        //else if (size < 12.0f)
+        //{
+        //  sizeClass = UntrackedObjectClass.C;
+        //}
+        //else if (size < 18.0f)
+        //{
+        //  sizeClass = UntrackedObjectClass.D;
+        //}
+        //else
+        //{
+        //  sizeClass = UntrackedObjectClass.E;
+        //}
       }
       else
       {
@@ -491,7 +492,7 @@ namespace VesselMover
         partNodes[0] = ProtoVessel.CreatePartNode(vesselData.craftPart.name, flightId, crewArray);
 
         // Default the size class
-        sizeClass = UntrackedObjectClass.A;
+        //sizeClass = UntrackedObjectClass.A;
 
         // Set the name
         if (string.IsNullOrEmpty(vesselData.name))

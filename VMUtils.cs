@@ -27,6 +27,7 @@ namespace VesselMover
 				return true;
 			}
 		}
+
 	  internal static void RepositionWindow(ref Rect windowPosition)
 	  {
 	    // This method uses Gui point system.
