@@ -185,13 +185,13 @@ namespace VesselMover
       //Altitude Adjustment
       if (GameSettings.THROTTLE_UP.GetKey())
       {
-        hoverAdjust += (moveSpeed * Time.fixedDeltaTime);
+        hoverAdjust += 10f > moveSpeed ? 10f : moveSpeed * Time.fixedDeltaTime;
         inputting = true;
       }
 
       if (GameSettings.THROTTLE_DOWN.GetKey())
       {
-        hoverAdjust += (-moveSpeed * Time.fixedDeltaTime);
+        hoverAdjust += -(10f > moveSpeed ? 10f : moveSpeed) * Time.fixedDeltaTime;
         inputting = true;
       }
 
