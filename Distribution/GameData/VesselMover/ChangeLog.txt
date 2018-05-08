@@ -1,3 +1,8 @@
+v1.7.2.3
+ - Added Spawn from VAB/SPH feature.
+ - Add Crew selection screen to spawn feature.  You can select one crewmember from a list of available crew
+
+
 v1.7.2.2
  - Recompiled for KSP 1.4.3  Works in 1.4.x
  - Fined tuned altitude adjustment for better behavior at low speed modes.

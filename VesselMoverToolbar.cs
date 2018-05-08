@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using KSP.UI.Screens;
 
@@ -13,6 +14,9 @@ namespace VesselMover
     public static bool addCrewMembers = true;
     public static bool selectCrewMembers = false;
     public static bool ShowUI = true;
+    private static bool latch;
+    internal static GUIStyle ButtonToggledStyle;
+    internal static List<ProtoCrewMember> SelectedCrewMembers = new List<ProtoCrewMember>();
 
     Rect toolbarRect;
     float toolbarWidth = 280;
@@ -26,13 +30,24 @@ namespace VesselMover
     bool showMoveHelp = false;
     float helpHeight;
 
+    private Rect _crewSelectRect;
+    private float _crewSelectWidth = 300;
+    private float _crewSelectHeight = 300;
+    private static Vector2 _crewSelectPosition;
+    private static Vector2 _displayViewerPosition = Vector2.zero;
+
     void Start()
     {
       GameEvents.onHideUI.Add(OnHideUI);
       GameEvents.onShowUI.Add(OnShowUI);
       toolbarPosition = new Vector2(Screen.width - toolbarWidth - 80, 39);
       toolbarRect = new Rect(toolbarPosition.x, toolbarPosition.y, toolbarWidth, toolbarHeight);
+      _crewSelectPosition = new Vector2(Screen.width/2 - _crewSelectWidth/2, Screen.height/2 - _crewSelectHeight /2);
+      _crewSelectRect = new Rect(_crewSelectPosition.x, _crewSelectPosition.y, _crewSelectWidth, _crewSelectHeight);
       contentWidth = toolbarWidth - (2 * toolbarMargin);
+
+      SelectedCrewMembers = new List<ProtoCrewMember>();
+
       AddToolbarButton();
     }
 
@@ -44,24 +59,32 @@ namespace VesselMover
 
     void OnGUI()
     {
-      if (ShowUI && toolbarGuiEnabled && VesselMove.instance && VesselSpawn.instance && !VesselSpawn.instance.openingCraftBrowser)
-      {
-        toolbarRect = GUI.Window(401240, toolbarRect, ToolbarWindow, "Vessel Mover", HighLogic.Skin.window);
+      ButtonToggledStyle = new GUIStyle(GUI.skin.button);
+      ButtonToggledStyle.normal.background = ButtonToggledStyle.onActive.background;
 
-        if (!VesselMove.instance.isMovingVessel)
-        {
-          if (MouseIsInRect(svRectScreenSpace))
-          {
-            Vector2 mousePos = MouseGUIPos();
-            Rect warningRect = new Rect(mousePos.x + 5, mousePos.y + 20, 200, 60);
-            GUI.Label(warningRect, "WARNING: Experimental. Launch clamps may be broken.", HighLogic.Skin.box);
-          }
-        }
-        else if (showMoveHelp)
-        {
-          GUI.Window(401241, new Rect(toolbarRect.x, toolbarRect.y + toolbarRect.height, toolbarRect.width, helpHeight), MoveHelp, "Controls", HighLogic.Skin.window);
-        }
+      if (ShowUI && addCrewMembers && VesselSpawn.IsSelectingCrew)
+      {
+        _crewSelectRect = GUILayout.Window(401239, _crewSelectRect, CrewSelectionWindow, "Select Crew", HighLogic.Skin.window);
+        if (!latch) Debug.Log(_crewSelectRect.ToString());
+        latch = true;
       }
+
+      if (!ShowUI || !toolbarGuiEnabled || !VesselMove.instance || !VesselSpawn.instance ||
+          VesselSpawn.instance.openingCraftBrowser || VesselSpawn.IsSelectingCrew) return;
+      toolbarRect = GUI.Window(401240, toolbarRect, ToolbarWindow, "Vessel Mover", HighLogic.Skin.window);
+
+      if (!VesselMove.instance.isMovingVessel)
+      {
+        if (!MouseIsInRect(svRectScreenSpace)) return;
+        Vector2 mousePos = MouseGUIPos();
+        Rect warningRect = new Rect(mousePos.x + 5, mousePos.y + 20, 200, 60);
+        GUI.Label(warningRect, "WARNING: Experimental. Launch clamps may be broken.", HighLogic.Skin.box);
+      }
+      else if (showMoveHelp)
+      {
+        GUI.Window(401241, new Rect(toolbarRect.x, toolbarRect.y + toolbarRect.height, toolbarRect.width, helpHeight), MoveHelp, "Controls", HighLogic.Skin.window);
+      }
+
     }
 
     void ToolbarWindow(int windowID)
@@ -97,8 +120,9 @@ namespace VesselMover
           svCrewScreenSpace.x += toolbarRect.x;
           svCrewScreenSpace.y += toolbarRect.y;
           addCrewMembers = GUI.Toggle(crewRect1, addCrewMembers, "Spawn Crew");
-          //selectCrewMembers = GUI.Toggle(crewRect2, selectCrewMembers, "Choose Crew");
-
+          if (!addCrewMembers) GUI.enabled = false;
+          selectCrewMembers = GUI.Toggle(crewRect2, selectCrewMembers, "Choose Crew");
+          GUI.enabled = true;
           showMoveHelp = false;
         }
         else
@@ -133,6 +157,41 @@ namespace VesselMover
       toolbarRect.height = (line * toolbarLineHeight) + (toolbarMargin * 2);
       GUI.DragWindow(new Rect(0, 0, Screen.width, 30));
       VMUtils.RepositionWindow(ref toolbarRect);
+    }
+
+    void CrewSelectionWindow(int windowID)
+    {
+      KerbalRoster kerbalRoster = HighLogic.CurrentGame.CrewRoster;
+      GUILayout.BeginVertical();
+      _displayViewerPosition = GUILayout.BeginScrollView(_displayViewerPosition, GUI.skin.box, GUILayout.Height(250), GUILayout.Width(280));
+      IEnumerator<ProtoCrewMember> kerbals = kerbalRoster.Kerbals(ProtoCrewMember.RosterStatus.Available).GetEnumerator();
+      while (kerbals.MoveNext())
+      {
+        ProtoCrewMember crewMember = kerbals.Current;
+        if (crewMember == null) continue;
+        bool selected = SelectedCrewMembers.Contains(crewMember);
+        GUIStyle buttonStyle = selected ? ButtonToggledStyle : HighLogic.Skin.button;
+        selected = GUILayout.Toggle(selected,  $"{crewMember.name}, {crewMember.gender}, {crewMember.trait}", buttonStyle);
+        if (selected && !SelectedCrewMembers.Contains(crewMember))
+        {
+          SelectedCrewMembers.Clear();
+          SelectedCrewMembers.Add(crewMember);
+        }
+        else if (!selected && SelectedCrewMembers.Contains(crewMember))
+        {
+          SelectedCrewMembers.Clear();
+        }
+      }
+      kerbals.Dispose();
+      GUILayout.EndScrollView();
+      GUILayout.Space(20);
+      if (GUILayout.Button("Select", HighLogic.Skin.button))
+      {
+        VesselSpawn.SelectedCrewData = SelectedCrewMembers;
+        VesselSpawn.IsSelectingCrew = false;
+        VesselSpawn.IsCrewSelected = true;
+      }
+      GUILayout.EndVertical();
     }
 
     Rect LineRect(ref float currentLine, float heightFactor = 1)

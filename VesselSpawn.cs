@@ -14,78 +14,18 @@ namespace VesselMover
   {
     public static VesselSpawn instance;
 
+    // These values are only used by Crew Selection.  Crew selection uses a GUI script on the VesselMoverToolbar.
+    // Therefore the value needs to be stored for later use.
+    internal static bool IsSelectingCrew;
+    internal static bool IsCrewSelected;
+    internal static string FullPath;
+    internal static List<ProtoCrewMember> SelectedCrewData;
+    // End Crew Selection vars
+
     void Awake()
     {
       if (instance) Destroy(instance);
       instance = this;
-    }
-
-    private class CrewData
-    {
-      public string name = null;
-      public ProtoCrewMember.Gender? gender = null;
-      public bool addToRoster = true;
-
-      public CrewData() { }
-      public CrewData(CrewData cd)
-      {
-        name = cd.name;
-        gender = cd.gender;
-        addToRoster = cd.addToRoster;
-      }
-    }
-
-    private class VesselData
-    {
-      public string name = null;
-      public Guid? id = null;
-      public string craftURL = null;
-      public AvailablePart craftPart = null;
-      public string flagURL = null;
-      public VesselType vesselType = VesselType.Ship;
-      public CelestialBody body = null;
-      public Orbit orbit = null;
-      public double latitude = 0.0;
-      public double longitude = 0.0;
-      public double? altitude = null;
-      public float height = 0.0f;
-      public bool orbiting = false;
-      public bool owned = false;
-      public List<CrewData> crew = new List<CrewData>();
-      public PQSCity pqsCity = null;
-      public Vector3d pqsOffset;
-      public float heading;
-      public float pitch;
-      public float roll;
-
-      public VesselData() { }
-      public VesselData(VesselData vd)
-      {
-        name = vd.name;
-        id = vd.id;
-        craftURL = vd.craftURL;
-        craftPart = vd.craftPart;
-        flagURL = vd.flagURL;
-        vesselType = vd.vesselType;
-        body = vd.body;
-        orbit = vd.orbit;
-        latitude = vd.latitude;
-        longitude = vd.longitude;
-        altitude = vd.altitude;
-        height = vd.height;
-        orbiting = vd.orbiting;
-        owned = vd.owned;
-        pqsCity = vd.pqsCity;
-        pqsOffset = vd.pqsOffset;
-        heading = vd.heading;
-        pitch = vd.pitch;
-        roll = vd.roll;
-
-        foreach (CrewData cd in vd.crew)
-        {
-          crew.Add(new CrewData(cd));
-        }
-      }
     }
 
     public bool openingCraftBrowser = false;
@@ -93,6 +33,7 @@ namespace VesselMover
     bool choosingPosition = false;
     CraftBrowserDialog craftBrowser;
     //object crewBrowser;
+
     public void StartVesselSpawn()
     {
       if (FlightGlobals.ActiveVessel && FlightGlobals.ActiveVessel.LandedOrSplashed)
@@ -113,15 +54,28 @@ namespace VesselMover
       Debug.Log("[Vessel Mover] - profile:" + HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0]);
       //craftBrowser = new CraftBrowserDialog(new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
       craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.SaveFolder, OnSelected, OnCancelled, false);
-      //crewBrowser = 
     }
 
     void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
     {
-      StartCoroutine(SpawnCraftRoutine(fullPath));
       craftBrowser = null;
       openingCraftBrowser = false;
+      if (VesselMoverToolbar.addCrewMembers && VesselMoverToolbar.selectCrewMembers)
+      {
+        FullPath = fullPath;
+        IsSelectingCrew = true;
+        return;
+      }
+      StartCoroutine(SpawnCraftRoutine(fullPath));
       choosingPosition = true;
+    }
+
+    void OnCrewSelected()
+    {
+      IsSelectingCrew = false;
+      StartCoroutine(SpawnCraftRoutine(FullPath, SelectedCrewData));
+      choosingPosition = true;
+      FullPath = null;
     }
 
     void OnCancelled()
@@ -141,6 +95,18 @@ namespace VesselMover
       if (openingCraftBrowser)
       {
         DrawShadowedMessage("Opening Craft Browser...");
+      }
+
+      if (IsSelectingCrew)
+      {
+        DrawShadowedMessage("Opening Crew Selection...");
+      }
+
+      if (IsCrewSelected)
+      {
+
+        IsCrewSelected = false;
+        OnCrewSelected();
       }
 
       if (choosingPosition)
@@ -181,7 +147,7 @@ namespace VesselMover
     }
 
 
-    IEnumerator SpawnCraftRoutine(string craftUrl)
+    IEnumerator SpawnCraftRoutine(string craftUrl, List<ProtoCrewMember> crewData = null)
     {
       yield return null;
       yield return null;
@@ -209,7 +175,7 @@ namespace VesselMover
           if (Input.GetMouseButtonDown(0))
           {
             Vector3 gpsPos = WorldPositionToGeoCoords(worldPos, FlightGlobals.currentMainBody);
-            SpawnVesselFromCraftFile(craftUrl, gpsPos, 90, 0);
+            SpawnVesselFromCraftFile(craftUrl, gpsPos, 90, 0, crewData);
             break;
           }
         }
@@ -280,7 +246,7 @@ namespace VesselMover
 
     }
 
-    void SpawnVesselFromCraftFile(string craftURL, Vector3d gpsCoords, float heading, float pitch)
+    void SpawnVesselFromCraftFile(string craftURL, Vector3d gpsCoords, float heading, float pitch, List<ProtoCrewMember> crewData = null)
     {
       VesselData newData = new VesselData();
 
@@ -302,10 +268,10 @@ namespace VesselMover
         newData.crew = new List<CrewData>();
       }
 
-      SpawnVessel(newData);
+      SpawnVessel(newData, crewData);
     }
 
-    void SpawnVessel(VesselData vesselData)
+    private void SpawnVessel(VesselData vesselData, List<ProtoCrewMember> crewData = null)
     {
       string gameDataDir = KSPUtil.ApplicationRootPath;
       Debug.Log("Spawning a vessel named '" + vesselData.name + "'");
@@ -385,20 +351,19 @@ namespace VesselMover
         Part part = shipConstruct.parts.Find(p => p.protoModuleCrew.Count < p.CrewCapacity);
 
         // Add the crew member
-        // Add Crew selection Dialog
-
         if (part != null && VesselMoverToolbar.addCrewMembers)
         {
           if (VesselMoverToolbar.selectCrewMembers)
           {
-            // Display a selection list and pick.
-
-
+            ProtoCrewMember crewMember = crewData.FirstOrDefault();
+            if (crewMember != null)
+              part.AddCrewmemberAt(crewMember, part.protoModuleCrew.Count);
+            VesselMoverToolbar.SelectedCrewMembers.Clear();
           }
           else
           {
             // Create the ProtoCrewMember
-            ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
+            ProtoCrewMember crewMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal();
             crewMember.gender = UnityEngine.Random.Range(0, 100) > 50
               ? ProtoCrewMember.Gender.Female
               : ProtoCrewMember.Gender.Male;
@@ -429,8 +394,6 @@ namespace VesselMover
           p.storePartRefs();
         }
 
-
-
         // Create the ship's parts
 
         List<ConfigNode> partNodesL = new List<ConfigNode>();
@@ -447,7 +410,7 @@ namespace VesselMover
 
         // Estimate an object class, numbers are based on the in game description of the
         // size classes.
-        float size = shipConstruct.shipSize.magnitude / 2.0f;
+        //float size = shipConstruct.shipSize.magnitude / 2.0f;
         //if (size < 4.0f)
         //{
         //  sizeClass = UntrackedObjectClass.A;
@@ -695,6 +658,73 @@ namespace VesselMover
       public static float TerrainHeight(double lat, double lon, CelestialBody body)
       {
         return 0;
+      }
+    }
+    internal class CrewData
+    {
+      public string name = null;
+      public ProtoCrewMember.Gender? gender = null;
+      public bool addToRoster = true;
+
+      public CrewData() { }
+      public CrewData(CrewData cd)
+      {
+        name = cd.name;
+        gender = cd.gender;
+        addToRoster = cd.addToRoster;
+      }
+    }
+
+    private class VesselData
+    {
+      public string name = null;
+      public Guid? id = null;
+      public string craftURL = null;
+      public AvailablePart craftPart = null;
+      public string flagURL = null;
+      public VesselType vesselType = VesselType.Ship;
+      public CelestialBody body = null;
+      public Orbit orbit = null;
+      public double latitude = 0.0;
+      public double longitude = 0.0;
+      public double? altitude = null;
+      public float height = 0.0f;
+      public bool orbiting = false;
+      public bool owned = false;
+      public List<CrewData> crew = new List<CrewData>();
+      public PQSCity pqsCity = null;
+      public Vector3d pqsOffset;
+      public float heading;
+      public float pitch;
+      public float roll;
+
+      public VesselData() { }
+      public VesselData(VesselData vd)
+      {
+        name = vd.name;
+        id = vd.id;
+        craftURL = vd.craftURL;
+        craftPart = vd.craftPart;
+        flagURL = vd.flagURL;
+        vesselType = vd.vesselType;
+        body = vd.body;
+        orbit = vd.orbit;
+        latitude = vd.latitude;
+        longitude = vd.longitude;
+        altitude = vd.altitude;
+        height = vd.height;
+        orbiting = vd.orbiting;
+        owned = vd.owned;
+        pqsCity = vd.pqsCity;
+        pqsOffset = vd.pqsOffset;
+        heading = vd.heading;
+        pitch = vd.pitch;
+        roll = vd.roll;
+
+        foreach (CrewData cd in vd.crew)
+        {
+          crew.Add(new CrewData(cd));
+        }
       }
     }
   }
