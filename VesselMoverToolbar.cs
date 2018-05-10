@@ -16,6 +16,8 @@ namespace VesselMover
     public static bool ShowUI = true;
     private static bool latch;
     internal static GUIStyle ButtonToggledStyle;
+    // ReSharper disable once PossibleNullReferenceException
+    internal static GUIStyle ToolTipStyle;
     internal static List<ProtoCrewMember> SelectedCrewMembers = new List<ProtoCrewMember>();
 
     Rect toolbarRect;
@@ -35,6 +37,7 @@ namespace VesselMover
     private float _crewSelectHeight = 300;
     private static Vector2 _crewSelectPosition;
     private static Vector2 _displayViewerPosition = Vector2.zero;
+    private static Rect Position;
 
     void Start()
     {
@@ -59,8 +62,7 @@ namespace VesselMover
 
     void OnGUI()
     {
-      ButtonToggledStyle = new GUIStyle(GUI.skin.button);
-      ButtonToggledStyle.normal.background = ButtonToggledStyle.onActive.background;
+      SetGuiStyles();
 
       if (ShowUI && addCrewMembers && VesselSpawn.IsSelectingCrew)
       {
@@ -77,8 +79,8 @@ namespace VesselMover
       {
         if (!MouseIsInRect(svRectScreenSpace)) return;
         Vector2 mousePos = MouseGUIPos();
-        Rect warningRect = new Rect(mousePos.x + 5, mousePos.y + 20, 200, 60);
-        GUI.Label(warningRect, "WARNING: Experimental. Launch clamps may be broken.", HighLogic.Skin.box);
+        //Rect warningRect = new Rect(mousePos.x + 5, mousePos.y + 20, 200, 60);
+        ShowToolTip(mousePos, "WARNING: Experimental. Launch clamps may be broken.");
       }
       else if (showMoveHelp)
       {
@@ -272,6 +274,44 @@ namespace VesselMover
     public void OnShowUI()
     {
       ShowUI = true;
+    }
+
+    internal static void ShowToolTip(Vector2 toolTipPos, string toolTip)
+    {
+      Vector2 size = ToolTipStyle.CalcSize(new GUIContent(toolTip));
+      Position = new Rect(toolTipPos.x + 5, toolTipPos.y + 5, size.x, size.y);
+      RepositionToolTip();
+      GUI.Window(0, Position, EmptyWindow, toolTip, ToolTipStyle);
+      GUI.BringWindowToFront(0);
+    }
+
+    internal void SetGuiStyles()
+    {
+      ButtonToggledStyle = new GUIStyle(HighLogic.Skin.button);
+      ButtonToggledStyle.normal.background = ButtonToggledStyle.onActive.background;
+      ToolTipStyle = new GUIStyle(GUI.skin.textArea)
+      {
+        border = new RectOffset(4, 4, 4, 4),
+        padding = new RectOffset(5, 5, 5, 5),
+        alignment = TextAnchor.MiddleLeft,
+        fontStyle = FontStyle.Italic,
+        wordWrap = false,
+        normal = { textColor = Color.green },
+        hover = { textColor = Color.green }
+      };
+      ToolTipStyle.hover.background = ToolTipStyle.normal.background;
+    }
+
+    private static void RepositionToolTip()
+    {
+      if (Position.xMax > Screen.width)
+        Position.x = Screen.width - Position.width;
+      if (Position.yMax > Screen.height)
+        Position.y = Screen.height - Position.height;
+    }
+
+    private static void EmptyWindow(int windowId)
+    {
     }
   }
 }

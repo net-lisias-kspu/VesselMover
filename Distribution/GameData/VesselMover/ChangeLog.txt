@@ -1,7 +1,6 @@
 v1.7.2.3
- - Added Spawn from VAB/SPH feature.
- - Add Crew selection screen to spawn feature.  You can select one crewmember from a list of available crew
-
+ - Add Crew selection screen to spawn feature.  You can select one crewmember from a list of available crew. Git Issue #17
+ - Clean up tool tips to display above window and not beyond edge of screen.
 
 v1.7.2.2
  - Recompiled for KSP 1.4.3  Works in 1.4.x
