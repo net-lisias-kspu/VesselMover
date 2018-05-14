@@ -19,18 +19,17 @@ namespace VesselMover
     // ReSharper disable once PossibleNullReferenceException
     internal static GUIStyle ToolTipStyle;
     internal static List<ProtoCrewMember> SelectedCrewMembers = new List<ProtoCrewMember>();
-
-    Rect toolbarRect;
-    float toolbarWidth = 280;
-    float toolbarHeight = 0;
-    float toolbarMargin = 6;
-    float toolbarLineHeight = 20;
-    float contentWidth;
-    Vector2 toolbarPosition;
-    Rect svRectScreenSpace;
-    Rect svCrewScreenSpace;
-    bool showMoveHelp = false;
-    float helpHeight;
+    private Rect toolbarRect;
+    private float toolbarWidth = 280;
+    private float toolbarHeight = 0;
+    private float toolbarMargin = 6;
+    private float toolbarLineHeight = 20;
+    private float contentWidth;
+    private Vector2 toolbarPosition;
+    private Rect svRectScreenSpace;
+    private Rect svCrewScreenSpace;
+    private bool showMoveHelp = false;
+    private float helpHeight;
 
     private Rect _crewSelectRect;
     private float _crewSelectWidth = 300;
@@ -39,7 +38,7 @@ namespace VesselMover
     private static Vector2 _displayViewerPosition = Vector2.zero;
     private static Rect Position;
 
-    void Start()
+    private void Start()
     {
       GameEvents.onHideUI.Add(OnHideUI);
       GameEvents.onShowUI.Add(OnShowUI);
@@ -54,13 +53,13 @@ namespace VesselMover
       AddToolbarButton();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
       GameEvents.onHideUI.Remove(OnHideUI);
       GameEvents.onShowUI.Remove(OnShowUI);
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
       SetGuiStyles();
 
@@ -71,11 +70,11 @@ namespace VesselMover
         latch = true;
       }
 
-      if (!ShowUI || !toolbarGuiEnabled || !VesselMove.instance || !VesselSpawn.instance ||
+      if (!ShowUI || !toolbarGuiEnabled || !VesselMove.Instance || !VesselSpawn.instance ||
           VesselSpawn.instance.openingCraftBrowser || VesselSpawn.IsSelectingCrew) return;
       toolbarRect = GUI.Window(401240, toolbarRect, ToolbarWindow, "Vessel Mover", HighLogic.Skin.window);
 
-      if (!VesselMove.instance.isMovingVessel)
+      if (!VesselMove.Instance.IsMovingVessel)
       {
         if (!MouseIsInRect(svRectScreenSpace)) return;
         Vector2 mousePos = MouseGUIPos();
@@ -89,18 +88,18 @@ namespace VesselMover
 
     }
 
-    void ToolbarWindow(int windowID)
+    private void ToolbarWindow(int windowID)
     {
       float line = 0;
       line += 1.25f;
 
-      if (FlightGlobals.ActiveVessel && (FlightGlobals.ActiveVessel.LandedOrSplashed || VesselMove.instance.isMovingVessel))
+      if (FlightGlobals.ActiveVessel && (FlightGlobals.ActiveVessel.LandedOrSplashed || VesselMove.Instance.IsMovingVessel))
       {
-        if (!VesselMove.instance.isMovingVessel)
+        if (!VesselMove.Instance.IsMovingVessel)
         {
           if (GUI.Button(LineRect(ref line, 1.5f), "Move Vessel", HighLogic.Skin.button))
           {
-            VesselMove.instance.StartMove(FlightGlobals.ActiveVessel, true);
+            VesselMove.Instance.StartMove(FlightGlobals.ActiveVessel, true);
           }
           line += 0.2f;
 
@@ -131,14 +130,14 @@ namespace VesselMover
         {
           if (GUI.Button(LineRect(ref line, 2), "Place Vessel", HighLogic.Skin.button))
           {
-            VesselMove.instance.EndMove();
+            VesselMove.Instance.EndMove();
           }
 
           line += 0.3f;
 
           if (GUI.Button(LineRect(ref line, 2), "Drop Vessel", HighLogic.Skin.button))
           {
-            VesselMove.instance.DropMove();
+            VesselMove.Instance.DropMove();
           }
 
           line += 0.3f;
@@ -161,7 +160,7 @@ namespace VesselMover
       VMUtils.RepositionWindow(ref toolbarRect);
     }
 
-    void CrewSelectionWindow(int windowID)
+    private void CrewSelectionWindow(int windowID)
     {
       KerbalRoster kerbalRoster = HighLogic.CurrentGame.CrewRoster;
       GUILayout.BeginVertical();
@@ -196,14 +195,14 @@ namespace VesselMover
       GUILayout.EndVertical();
     }
 
-    Rect LineRect(ref float currentLine, float heightFactor = 1)
+    private Rect LineRect(ref float currentLine, float heightFactor = 1)
     {
       Rect rect = new Rect(toolbarMargin, toolbarMargin + (currentLine * toolbarLineHeight), contentWidth, toolbarLineHeight * heightFactor);
       currentLine += heightFactor + 0.1f;
       return rect;
     }
 
-    void MoveHelp(int windowID)
+    private void MoveHelp(int windowID)
     {
       float line = 0;
       line += 1.25f;
@@ -219,19 +218,20 @@ namespace VesselMover
         GameSettings.TRANSLATE_RIGHT.primary.ToString(), ref line);
       LineLabel("Auto rotate rocket: " + GameSettings.TRANSLATE_BACK.primary.ToString(), ref line);
       LineLabel("Auto rotate plane: " + GameSettings.TRANSLATE_FWD.primary.ToString(), ref line);
-      LineLabel("Change movement speed: Tab", ref line);
+      LineLabel("Change movement mode: Tab", ref line);
+      LineLabel("Reset Altitude: " + GameSettings.THROTTLE_CUTOFF.primary.ToString(), ref line);
       LineLabel("Adjust Altitude: " + GameSettings.THROTTLE_UP.primary.ToString() + " " +
         GameSettings.THROTTLE_DOWN.primary.ToString(), ref line);
 
       helpHeight = (line * toolbarLineHeight) + (toolbarMargin * 2);
     }
 
-    void LineLabel(string label, ref float line)
+    private void LineLabel(string label, ref float line)
     {
       GUI.Label(LineRect(ref line), label, HighLogic.Skin.label);
     }
 
-    void AddToolbarButton()
+    private void AddToolbarButton()
     {
       if (HighLogic.LoadedSceneIsFlight)
       {
@@ -254,7 +254,7 @@ namespace VesselMover
       VesselMoverToolbar.toolbarGuiEnabled = false;
     }
 
-    void Dummy()
+    private void Dummy()
     { }
 
     public static bool MouseIsInRect(Rect rect)

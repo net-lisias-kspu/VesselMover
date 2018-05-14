@@ -11,10 +11,13 @@ Click Drop vessel to relase the vessel at what ever altitude you ahve set.  Vess
 Click spawn vessel to open the craft browser.  Select a craft, then select a place to spawn it.  It will spawn in vessel-move mode so you can reposition it or rotate it before placing it down.
 
 Controls: (Also displayed in the help window when a vessel is in move mode)
-Movement - pitch/yaw keys (WASD by default).
-Roll to roll (QE by default), 
-Translation to pitch and yaw (IJKL by default) 
-Translate FWD (H by default) to auto-level planes
-Translate BACK (N by default) to auto-upright rockets
-Translate UP (LeftShift by default) 
-Translate DOWN (LeftControl by default)
+
+Movement Mode:  Tab key.  Normal, Slow Fine, and Ludicrous
+Reset Altitude: Throttle Off (X by default)
+Movement - pitch/yaw keys (WASD by default)
+Roll to roll: (QE by default) 
+Translation to pitch and yaw: (IJKL by default) 
+Translate FWD: (H by default) to auto-level planes
+Translate BACK: (N by default) to auto-upright rockets
+Translate UP: Throttle Up (LeftShift by default) 
+Translate DOWN: Throttle Down (LeftControl by default)

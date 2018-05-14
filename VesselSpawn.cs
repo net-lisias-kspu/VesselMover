@@ -20,18 +20,19 @@ namespace VesselMover
     internal static bool IsCrewSelected;
     internal static string FullPath;
     internal static List<ProtoCrewMember> SelectedCrewData;
+
     // End Crew Selection vars
 
-    void Awake()
+    private void Awake()
     {
       if (instance) Destroy(instance);
       instance = this;
     }
 
     public bool openingCraftBrowser = false;
-    bool loadingCraft = false;
-    bool choosingPosition = false;
-    CraftBrowserDialog craftBrowser;
+    private bool loadingCraft = false;
+    private bool choosingPosition = false;
+    private CraftBrowserDialog craftBrowser;
     //object crewBrowser;
 
     public void StartVesselSpawn()
@@ -42,7 +43,7 @@ namespace VesselMover
       }
     }
 
-    IEnumerator StartVesselSpawnRoutine()
+    private IEnumerator StartVesselSpawnRoutine()
     {
       openingCraftBrowser = true;
 
@@ -56,7 +57,7 @@ namespace VesselMover
       craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.SaveFolder, OnSelected, OnCancelled, false);
     }
 
-    void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
+    private void OnSelected(string fullPath, CraftBrowserDialog.LoadType loadType)
     {
       craftBrowser = null;
       openingCraftBrowser = false;
@@ -70,7 +71,7 @@ namespace VesselMover
       choosingPosition = true;
     }
 
-    void OnCrewSelected()
+    private void OnCrewSelected()
     {
       IsSelectingCrew = false;
       StartCoroutine(SpawnCraftRoutine(FullPath, SelectedCrewData));
@@ -78,13 +79,13 @@ namespace VesselMover
       FullPath = null;
     }
 
-    void OnCancelled()
+    private void OnCancelled()
     {
       craftBrowser = null;
       openingCraftBrowser = false;
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
       if (craftBrowser != null)
       {
@@ -120,7 +121,7 @@ namespace VesselMover
       }
     }
 
-    void DrawShadowedMessage(string message)
+    private void DrawShadowedMessage(string message)
     {
       GUIStyle style = new GUIStyle(HighLogic.Skin.label);
       style.fontSize = 22;
@@ -146,8 +147,7 @@ namespace VesselMover
       GUI.Label(labelRect, message, style);
     }
 
-
-    IEnumerator SpawnCraftRoutine(string craftUrl, List<ProtoCrewMember> crewData = null)
+    private IEnumerator SpawnCraftRoutine(string craftUrl, List<ProtoCrewMember> crewData = null)
     {
       yield return null;
       yield return null;
@@ -200,7 +200,7 @@ namespace VesselMover
       return new Vector3d(lat, longi, alt);
     }
 
-    bool GetMouseWorldPoint(out Vector3 worldPos)
+    private bool GetMouseWorldPoint(out Vector3 worldPos)
     {
       worldPos = Vector3.zero;
       float maxTargetingRange = 5000;
@@ -246,7 +246,7 @@ namespace VesselMover
 
     }
 
-    void SpawnVesselFromCraftFile(string craftURL, Vector3d gpsCoords, float heading, float pitch, List<ProtoCrewMember> crewData = null)
+    private void SpawnVesselFromCraftFile(string craftURL, Vector3d gpsCoords, float heading, float pitch, List<ProtoCrewMember> crewData = null)
     {
       VesselData newData = new VesselData();
 
@@ -617,7 +617,7 @@ namespace VesselMover
       }
     }
 
-    IEnumerator PlaceSpawnedVessel(Vessel v, bool moveVessel)
+    private IEnumerator PlaceSpawnedVessel(Vessel v, bool moveVessel)
     {
       loadingCraft = true;
       v.isPersistent = true;
@@ -642,10 +642,10 @@ namespace VesselMover
 
       if (moveVessel)
       {
-        VesselMove.instance.StartMove(v, false);
-        VesselMove.instance.moveHeight = 35;
+        VesselMove.Instance.StartMove(v, false);
+        VesselMove.Instance.MoveHeight = 35;
         yield return null;
-        if (VesselMove.instance.movingVessel == v)
+        if (VesselMove.Instance.MovingVessel == v)
         {
           v.Landed = false;
         }
