@@ -85,7 +85,15 @@ namespace VesselMover
                 if (!FlightGlobals.ActiveVessel.HoldPhysics && !launching)
                 {
                     launching = true;
-                    StartLaunch();
+
+                    if (launchSiteChanged)
+                    {
+                        StartLaunch();
+                    }
+                    else
+                    {
+                        GameUiDisableML();
+                    }
                 }
             }
 
