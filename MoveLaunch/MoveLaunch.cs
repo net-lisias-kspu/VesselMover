@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace VesselMover
 {
-    [KSPAddon(KSPAddon.Startup.FlightAndEditor, true)]
+    [KSPAddon(KSPAddon.Startup.FlightEditorAndKSC, true)]
     public class MoveLaunch : MonoBehaviour
     {
         private const float WindowWidth = 220;
@@ -21,7 +21,7 @@ namespace VesselMover
         private readonly float contentWidth = WindowWidth - 2 * LeftIndent;
         private readonly float entryHeight = 20;
         private float _contentWidth;
-        private bool _gameUiToggle;
+        public static bool _gameUiToggle;
         private float _windowHeight = 250;
         private float _windowHeight2 = 250;
 
@@ -46,14 +46,21 @@ namespace VesselMover
             instance = this;
         }
 
+
+
         private void Start()
         {
             _windowRect = new Rect(Screen.width - 200 -140, 200, WindowWidth, _windowHeight);
             _windowRect2 = new Rect(Screen.width - 200 - 140, 200, WindowWidth, _windowHeight);
 
+            GameEvents.onEditorStarted.Add(DisableGui);
+            GameEvents.onEditorStarted.Add(DisableGuiF);
             GameEvents.onHideUI.Add(DisableGui);
             GameEvents.onShowUI.Add(EnableGui);
             AddToolbarButton();
+            DisableGui();
+            DisableGuiF();
+            launching = false;
             _gameUiToggle = true;
             altAdjust = 5;
             _guiX = "0";
@@ -92,7 +99,12 @@ namespace VesselMover
                     }
                     else
                     {
-                        GameUiDisableML();
+                        if (_gameUiToggle)
+                        {
+                            guiOpen = false;
+                            GameUiDisableML();
+                            DisableGui();
+                        }
                     }
                 }
             }
@@ -101,7 +113,10 @@ namespace VesselMover
             {
                 if (!_gameUiToggle)
                 {
+                    guiOpen = false;
+                    launching = false;
                     GameUiEnableML();
+                    DisableGui();
                 }
             }
         }
@@ -216,6 +231,7 @@ namespace VesselMover
 
         private void StartLaunch()
         {
+            DisableGui();
             EnableGuiF();
 
             if (beach)
@@ -318,7 +334,6 @@ namespace VesselMover
         public void ResetLaunchCoords()
         {
             gps = false;
-            launching = false;
             islandRunway = false;
             TrunkPeninsula = false;
             KerbiniIsland = false;
@@ -565,7 +580,7 @@ namespace VesselMover
         public void DropVessel()
         {
             GameUiDisableML();
-
+            launching = false;
 
             Debug.Log("[Move Launch] Removing Mass Modifier Module .......");
 
@@ -584,6 +599,7 @@ namespace VesselMover
         public void PlaceVessel()
         {
             GameUiDisableML();
+            launching = false;
 
             var altitude_ = FlightGlobals.ActiveVessel.altitude - FlightGlobals.ActiveVessel.radarAltitude;
             if (altitude_ >= 0)
@@ -726,6 +742,7 @@ namespace VesselMover
         public void EnableGui()
         {
             ResetLaunchCoords();
+            launching = false;
             _gameUiToggle = true;
             GuiEnabledMLFlight = false;
             GuiEnabledML = true;
@@ -833,31 +850,6 @@ namespace VesselMover
             }
         }
 
-        private void DrawkscIslandNewHarbor(float line)
-        {
-            GUIStyle guardStyle = kscHarborEast ? HighLogic.Skin.box : HighLogic.Skin.button;
-            var saveRect = new Rect(LeftIndent * 1.5f, ContentTop + line * entryHeight, contentWidth * 0.9f, entryHeight);
-
-            if (!kscIslandNewHarbor)
-            {
-                if (GUI.Button(saveRect, "KSC Island Harbor", guardStyle))
-                {
-                    if (!launchSiteChanged)
-                    {
-                        launchSiteChanged = true;
-                        kscIslandNewHarbor = true;
-                        EditorLogic.fetch.launchVessel();
-                    }
-                }
-            }
-            else
-            {
-                if (GUI.Button(saveRect, "KSC Island Harbor", guardStyle))
-                {
-                    ResetLaunchCoords();
-                }
-            }
-        }
 
         private void DrawkscIsandChannel(float line)
         {
@@ -931,6 +923,32 @@ namespace VesselMover
             else
             {
                 if (GUI.Button(saveRect, "Tirpitz Bay", guardStyle))
+                {
+                    ResetLaunchCoords();
+                }
+            }
+        }
+
+        private void DrawkscIslandNewHarbor(float line)
+        {
+            GUIStyle guardStyle = kscHarborEast ? HighLogic.Skin.box : HighLogic.Skin.button;
+            var saveRect = new Rect(LeftIndent * 1.5f, ContentTop + line * entryHeight, contentWidth * 0.9f, entryHeight);
+
+            if (!kscIslandNewHarbor)
+            {
+                if (GUI.Button(saveRect, "KSC Island Harbor", guardStyle))
+                {
+                    if (!launchSiteChanged)
+                    {
+                        launchSiteChanged = true;
+                        kscIslandNewHarbor = true;
+                        EditorLogic.fetch.launchVessel();
+                    }
+                }
+            }
+            else
+            {
+                if (GUI.Button(saveRect, "KSC Island Harbor", guardStyle))
                 {
                     ResetLaunchCoords();
                 }
