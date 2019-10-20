@@ -171,6 +171,10 @@ call "%25ZA_DIR%25\7za.exe" a -tzip -r  "%25DIST_DIR%25\%25ModName%25.@(VersionN
 @echo Deploy $(Targetname) Distribution files to test env:  %25KSP_DIR%25\GameData...
 xcopy /E /Y "$(ProjectDir)Distribution\GameData" "%25KSP_DIR%25\GameData"
 
+if $(ConfigurationName) == Debug (
+copy /Y "$(TargetDir)$(Targetname).pdb" "%25KSP_DIR%25\GameData\%25ModName%25\Plugins\"
+)
+
 @echo Build/deploy complete!</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
