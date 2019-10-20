@@ -301,6 +301,9 @@ namespace VesselMover
       bool surfaceDetected = false;
       var rayCastHits= CapsuleCast();
 
+
+      Array.Sort(rayCastHits, (r1, r2) => r1.distance.CompareTo(r2.distance));
+
       foreach (var hit in rayCastHits)
       {
           var partHit = hit.collider.gameObject.GetComponentInParent<Part>();
