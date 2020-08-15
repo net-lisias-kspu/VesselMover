@@ -1,5 +1,8 @@
 # Vessel Mover :: Change Log
 
+* 2018-0326: 1.7 (Papa_Joe) for KSP 1.4.1
+	+ 1.4 recompile and upgraded to latest Unity
+	+ Updated AppLauncher toolbar button to support new Unity Compression.  Increased icon size to 128 x 128
 * 2017-1023: 1.6.2 (Papa_Joe) for KSP 1.2
 	+ No changelog provided
 * 2017-0706: 1.6.1 (Papa_Joe) for KSP 1.2
