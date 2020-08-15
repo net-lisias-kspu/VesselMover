@@ -1,5 +1,10 @@
 # Vessel Mover :: Change Log
 
+* 2019-0422: 1.7.4 (jrodriguez) for KSP 1.7
+	+ New:
+		- Recompiled for KSP 1.7
+		- (Thanks to DoctorDavinci) Added new Feature:  Move Launch  Now you can Move to a specific location prior to actually spawning a vessel.
+		- (Thanks to DoctorDavinci) Added GPS location Spawning.  With Move Launch you can spawn a vessel to a specific GPS location.
 * 2018-0514: 1.7.3 (Papa_Joe) for KSP 1.4.5
 	+ Add Crew selection screen to spawn feature.  You can now (optionally) select one crewmember from a list of available crew. Git Issue #17
 	+ Fixed Tab key movement mode changes to prevent positioning craft underground. Git Issue #29
