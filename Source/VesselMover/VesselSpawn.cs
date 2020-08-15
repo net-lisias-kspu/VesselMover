@@ -51,8 +51,8 @@ namespace VesselMover
       //float height = Screen.height * 0.7f;
       yield return null;
 
-      Debug.Log("[Vessel Mover] - profile:" + HighLogic.SaveFolder);
-      Debug.Log("[Vessel Mover] - profile:" + HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0]);
+      Log.info("[Vessel Mover] - profile: {0}", HighLogic.SaveFolder);
+      Log.info("[Vessel Mover] - profile: {0}", HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0]);
       //craftBrowser = new CraftBrowserDialog(new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height), EditorFacility.SPH, HighLogic.CurrentGame.Title.Split(new string[] { " (" }, StringSplitOptions.None)[0], "Spawn Vessel", OnSelected, OnCancelled, HighLogic.Skin, Texture2D.whiteTexture, false, false);
       craftBrowser = CraftBrowserDialog.Spawn(EditorFacility.SPH, HighLogic.SaveFolder, OnSelected, OnCancelled, false);
     }
@@ -274,7 +274,7 @@ namespace VesselMover
     private void SpawnVessel(VesselData vesselData, List<ProtoCrewMember> crewData = null)
     {
       string gameDataDir = KSPUtil.ApplicationRootPath;
-      Debug.Log("Spawning a vessel named '" + vesselData.name + "'");
+      Log.info("Spawning a vessel named '" + vesselData.name + "'");
 
       // Set additional info for landed vessels
       bool landed = false;
@@ -312,8 +312,7 @@ namespace VesselMover
         shipConstruct = ShipConstruction.LoadShip(vesselData.craftURL);
         if (shipConstruct == null)
         {
-          Debug.Log("ShipConstruct was null when tried to load '" + vesselData.craftURL +
-            "' (usually this means the file could not be found).");
+          Log.info("ShipConstruct was null when tried to load '{0}' (usually this means the file could not be found).", vesselData.craftURL);
           return;//continue;
         }
 

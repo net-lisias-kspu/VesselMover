@@ -4,6 +4,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
+using PluginData = KSPe.IO.File<VesselMover.Startup>.Asset;
+
 namespace VesselMover
 {
     [KSPAddon(KSPAddon.Startup.FlightEditorAndKSC, true)]
@@ -123,11 +125,11 @@ namespace VesselMover
 
         private void AddToolbarButton()
         {
-            string textureDir = "VesselMover/Textures/";
 
             if (!HasAddedButton)
             {
-                Texture buttonTexture = GameDatabase.Instance.GetTexture(textureDir + "ML_icon", false); //texture to use for the button
+                string texpath = PluginData.Solve("Textures", "ML_icon");
+                Texture buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
                 ApplicationLauncher.Instance.AddModApplication(ToggleGUI, ToggleGUI, Dummy, Dummy, Dummy, Dummy,
                     ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB, buttonTexture);
                 HasAddedButton = true;
@@ -360,13 +362,13 @@ namespace VesselMover
         {
             lat = double.Parse(_guiX);
             lon = double.Parse(_guiY);
-            Debug.Log("[Move Launch] LaunchToGPS");
+            Log.info("[Move Launch] LaunchToGPS");
             StartCoroutine(Launch());
         }
 
         public void LaunchToRunway(double lat, double lon)
         {
-            Debug.Log("[Move Launch] LaunchToRunway");
+            Log.info("[Move Launch] LaunchToRunway");
             lat = latRunway;
             lon = lonRunway;
             StartCoroutine(Launch());
@@ -374,7 +376,7 @@ namespace VesselMover
 
         public void LaunchToIslandRunway()
         {
-            Debug.Log("[Move Launch] LaunchToIslandRunway");
+            Log.info("[Move Launch] LaunchToIslandRunway");
             lat = latislandRunway;
             lon = lonislandRunway;
             StartCoroutine(Launch());
@@ -382,7 +384,7 @@ namespace VesselMover
 
         public void LaunchToTrunkPeninsula()
         {
-            Debug.Log("[Move Launch] LaunchToTrunkPeninsula");
+            Log.info("[Move Launch] LaunchToTrunkPeninsula");
             lat = latTrunkPeninsula;
             lon = lonTrunkPeninsula;
             StartCoroutine(Launch());
@@ -390,7 +392,7 @@ namespace VesselMover
 
         public void LaunchToMidwayIsland()
         {
-            Debug.Log("[Move Launch] LaunchToRunway");
+            Log.info("[Move Launch] LaunchToRunway");
             lat = latMidwayIsland;
             lon = lonMidwayIsland;
             StartCoroutine(Launch());
@@ -398,7 +400,7 @@ namespace VesselMover
 
         public void LaunchToSouthPole()
         {
-            Debug.Log("[Move Launch] LaunchToSouthPole");
+            Log.info("[Move Launch] LaunchToSouthPole");
             lat = latSouthPole;
             lon = lonSouthPole;
             StartCoroutine(Launch());
@@ -406,7 +408,7 @@ namespace VesselMover
 
         public void LaunchToNorthPole()
         {
-            Debug.Log("[Move Launch] LaunchToNorthPole");
+            Log.info("[Move Launch] LaunchToNorthPole");
             lat = latNorthPole;
             lon = lonNorthPole;
             StartCoroutine(Launch());
@@ -414,7 +416,7 @@ namespace VesselMover
 
         public void LaunchToKerbiniIsland()
         {
-            Debug.Log("[Move Launch] LaunchToKerbiniIsland");
+            Log.info("[Move Launch] LaunchToKerbiniIsland");
             lat = latKerbiniIsland;
             lon = lonKerbiniIsland;
             StartCoroutine(Launch());
@@ -422,7 +424,7 @@ namespace VesselMover
 
         public void LaunchToBeach()
         {
-            Debug.Log("[Move Launch] LaunchToBeach");
+            Log.info("[Move Launch] LaunchToBeach");
             lat = latBeach;
             lon = lonBeach;
             StartCoroutine(Launch());
@@ -430,7 +432,7 @@ namespace VesselMover
 
         public void LaunchToIslandBeach()
         {
-            Debug.Log("[Move Launch] LaunchToIslandBeach");
+            Log.info("[Move Launch] LaunchToIslandBeach");
             lat = latkscIslandBeach;
             lon = lonkscIslandBeach;
             StartCoroutine(Launch());
@@ -438,7 +440,7 @@ namespace VesselMover
 
         public void LaunchToBaikerbanur()
         {
-            Debug.Log("[Move Launch] LaunchToBaikerbanur");
+            Log.info("[Move Launch] LaunchToBaikerbanur");
             lat = latBaikerbanur;
             lon = lonBaikerbanur;
             StartCoroutine(Launch());
@@ -446,7 +448,7 @@ namespace VesselMover
 
         public void LaunchToPyramids()
         {
-            Debug.Log("[Move Launch] LaunchToPyramids");
+            Log.info("[Move Launch] LaunchToPyramids");
             lat = latPyramids;
             lon = lonPyramids;
             StartCoroutine(Launch());
@@ -454,7 +456,7 @@ namespace VesselMover
 
         public void LaunchTokscHarborEast()
         {
-            Debug.Log("[Move Launch] LaunchTokscHarborEast");
+            Log.info("[Move Launch] LaunchTokscHarborEast");
             lat = latkscHarborEast;
             lon = lonkscHarborEast;
             StartCoroutine(Launch());
@@ -462,7 +464,7 @@ namespace VesselMover
 
         public void LaunchTokscIslandNewHarbor()
         {
-            Debug.Log("[Move Launch] LaunchTokscIslandNewHarbor");
+            Log.info("[Move Launch] LaunchTokscIslandNewHarbor");
             lat = latkscIslandNewHarbor;
             lon = lonkscIslandNewHarbor;
             StartCoroutine(Launch());
@@ -470,7 +472,7 @@ namespace VesselMover
 
         public void LaunchTokscIsandChannel()
         {
-            Debug.Log("[Move Launch] LaunchTokscIsandChannel");
+            Log.info("[Move Launch] LaunchTokscIsandChannel");
             lat = latkscIsandChannel;
             lon = lonkscIsandChannel;
             StartCoroutine(Launch());
@@ -478,7 +480,7 @@ namespace VesselMover
 
         public void LaunchToMissileRange200Island()
         {
-            Debug.Log("[Move Launch] LaunchToMissileRange200Island");
+            Log.info("[Move Launch] LaunchToMissileRange200Island");
             lat = latMissileRange200Island;
             lon = lonMissileRange200Island;
             StartCoroutine(Launch());
@@ -486,7 +488,7 @@ namespace VesselMover
 
         public void LaunchToTirpitzBay()
         {
-            Debug.Log("[Move Launch] LaunchToTirpitzBay");
+            Log.info("[Move Launch] LaunchToTirpitzBay");
             lat = latTirpitzBay;
             lon = lonTirpitzBay;
             StartCoroutine(Launch());
@@ -494,7 +496,7 @@ namespace VesselMover
 
         public void LaunchToKerbiniAtol()
         {
-            Debug.Log("[Move Launch] LaunchToKerbiniAtol");
+            Log.info("[Move Launch] LaunchToKerbiniAtol");
             lat = latKerbiniAtol;
             lon = lonKerbiniAtol;
             StartCoroutine(Launch());
@@ -582,7 +584,7 @@ namespace VesselMover
             GameUiDisableML();
             launching = false;
 
-            Debug.Log("[Move Launch] Removing Mass Modifier Module .......");
+            Log.info("[Move Launch] Removing Mass Modifier Module .......");
 
             foreach (Part p in FlightGlobals.ActiveVessel.parts)
             {
@@ -619,7 +621,7 @@ namespace VesselMover
             FlightGlobals.ActiveVessel.SetPosition(LaunchPosition(), true);
             FlightGlobals.ActiveVessel.GetComponent<Rigidbody>().isKinematic = false;
 
-            Debug.Log("[Move Launch] Removing Mass Modifier Module .......");
+            Log.info("[Move Launch] Removing Mass Modifier Module .......");
 
             foreach (Part p in FlightGlobals.ActiveVessel.parts)
             {
@@ -747,14 +749,14 @@ namespace VesselMover
             GuiEnabledMLFlight = false;
             GuiEnabledML = true;
             guiOpen = true;
-            Debug.Log("[Move Launch Controller]: Showing Editor GUI");
+            Log.info("[Move Launch Controller]: Showing Editor GUI");
         }
 
         public void DisableGui()
         {
             guiOpen = false;
             GuiEnabledML = false;
-            Debug.Log("[Move Launch Controller]: Hiding Editor GUI");
+            Log.info("[Move Launch Controller]: Hiding Editor GUI");
         }
 
         public void EnableGuiF()
@@ -763,14 +765,14 @@ namespace VesselMover
             GuiEnabledMLFlight = true;
             GuiEnabledML = false;
             guiOpen = true;
-            Debug.Log("[Move Launch Controller]: Showing Flight GUI");
+            Log.info("[Move Launch Controller]: Showing Flight GUI");
         }
 
         public void DisableGuiF()
         {
             guiOpen = false;
             GuiEnabledMLFlight = false;
-            Debug.Log("[Move Launch Controller]: Hiding Flight GUI");
+            Log.info("[Move Launch Controller]: Hiding Flight GUI");
         }
 
         private void GameUiEnableML()

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using KSP.UI.Screens;
+
+using PluginData = KSPe.IO.File<VesselMover.Startup>.Asset;
 
 namespace VesselMover
 {
@@ -66,7 +66,7 @@ namespace VesselMover
       if (ShowUI && addCrewMembers && VesselSpawn.IsSelectingCrew)
       {
         _crewSelectRect = GUILayout.Window(401239, _crewSelectRect, CrewSelectionWindow, "Select Crew", HighLogic.Skin.window);
-        if (!latch) Debug.Log(_crewSelectRect.ToString());
+        if (!latch) Log.info(_crewSelectRect.ToString());
         latch = true;
       }
 
@@ -237,7 +237,8 @@ namespace VesselMover
       {
         if (!hasAddedButton)
         {
-          Texture buttonTexture = GameDatabase.Instance.GetTexture("VesselMover/Textures/icon", false);
+          string texpath = PluginData.Solve("Textures", "icon");
+          Texture buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
           ApplicationLauncher.Instance.AddModApplication(ShowToolbarGUI, HideToolbarGUI, Dummy, Dummy, Dummy, Dummy, ApplicationLauncher.AppScenes.FLIGHT, buttonTexture);
           hasAddedButton = true;
         }

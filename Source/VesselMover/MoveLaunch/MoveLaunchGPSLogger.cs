@@ -1,6 +1,7 @@
 ﻿using KSP.UI.Screens;
-using System;
 using UnityEngine;
+
+using PluginData = KSPe.IO.File<VesselMover.Startup>.Asset;
 
 namespace VesselMover
 {
@@ -43,11 +44,10 @@ namespace VesselMover
 
         private void AddToolbarButton()
         {
-            string textureDir = "VesselMover/Textures/";
-
             if (!HasAddedButton)
             {
-                Texture buttonTexture = GameDatabase.Instance.GetTexture(textureDir + "GPS_icon", false); //texture to use for the button
+                string texpath = PluginData.Solve("Textures", "GPS_icon");
+                Texture buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
                 ApplicationLauncher.Instance.AddModApplication(EnableGuiMLGPS, DisableGuiMLGPS, Dummy, Dummy, Dummy, Dummy,
                     ApplicationLauncher.AppScenes.FLIGHT, buttonTexture);
                 HasAddedButton = true;
@@ -60,10 +60,10 @@ namespace VesselMover
             double lon = FlightGlobals.ActiveVessel.longitude;
             double alt = FlightGlobals.ActiveVessel.altitude;
 
-            Debug.Log("[Move Launch] GPS Location Name: " + GPSname);
-            Debug.Log("[Move Launch] GPS Latitude: " + lat);
-            Debug.Log("[Move Launch] GPS Longitude: " + lon);
-            Debug.Log("[Move Launch] GPS Altitude: " + alt);
+            Log.info("[Move Launch] GPS Location Name: {0}", GPSname);
+            Log.info("[Move Launch] GPS Latitude: {0}", lat);
+            Log.info("[Move Launch] GPS Longitude: {0}", lon);
+            Log.info("[Move Launch] GPS Altitude: {0}", alt);
 
             ScreenMsg("GPS Location Name: " + GPSname);
             ScreenMsg("GPS Latitude: " + lat);
@@ -96,14 +96,14 @@ namespace VesselMover
         {
             guiOpen = true;
             GuiEnabledMLGPS = true;
-            Debug.Log("[Move Launch]: Showing GUI");
+            Log.info("[Move Launch]: Showing GUI");
         }
 
         public void DisableGuiMLGPS()
         {
             guiOpen = false;
             GuiEnabledMLGPS = false;
-            Debug.Log("[Move Launch]: Hiding GUI");
+            Log.info("[Move Launch]: Hiding GUI");
         }
 
         private void GameUiEnableMLGPS()

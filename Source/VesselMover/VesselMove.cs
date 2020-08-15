@@ -352,12 +352,17 @@ namespace VesselMover
 
       double srfHeight = bodyPQS.GetSurfaceHeight(bodyUpVector);
 
-      //double alt = srfHeight - bodyPQS.radius;         
-      //double rAlt = movingVessel.radarAltitude;
-      //double tAlt = TrueAlt(movingVessel);
-      //double pAlt = movingVessel.pqsAltitude;            
-      //double teralt = movingVessel.mainBody.TerrainAltitude(movingVessel.mainBody.GetLatitude(geoCoords), movingVessel.mainBody.GetLongitude(geoCoords));
-      //Debug.Log ("Surface height: "+movingVessel.mainBody.pqsController.GetSurfaceHeight(up));
+
+#if false
+      {
+          double alt = srfHeight - bodyPQS.radius;         
+          double rAlt = movingVessel.radarAltitude;
+          double tAlt = TrueAlt(movingVessel);
+          double pAlt = movingVessel.pqsAltitude;            
+          double teralt = movingVessel.mainBody.TerrainAltitude(movingVessel.mainBody.GetLatitude(geoCoords), movingVessel.mainBody.GetLongitude(geoCoords));
+          Log.dbg("Surface height: {0}", movingVessel.mainBody.pqsController.GetSurfaceHeight(up));
+      }
+#endif
 
       if (!surfaceDetected || srfBelowWater)
       {
@@ -397,7 +402,7 @@ namespace VesselMover
     {
       if (!body)
       {
-        Debug.LogWarning("WorldPositionToGeoCoords body is null");
+        Log.warn("WorldPositionToGeoCoords body is null");
         return Vector3d.zero;
       }
 
@@ -411,7 +416,7 @@ namespace VesselMover
     {
       if (!v)
       {
-        Debug.Log("[VesselMover] : Vessel mover tried to move a null vessel.");
+        Log.info("[VesselMover] : Vessel mover tried to move a null vessel.");
       }
 
       if (v.packed)
@@ -743,11 +748,11 @@ namespace VesselMover
         BottomLength = Vector3.Project(closestVert - vessel.CoM, up).magnitude;
         _localBottomPoint = vessel.transform.InverseTransformPoint(closestVert);
 
-        //Debug.Log ("Vessel bottom length: "+bottomLength);
+        //Log.dbg ("Vessel bottom length: "+bottomLength);
         /*
 				if(furthestPart!=null)
 				{
-					//Debug.Log ("Furthest Part: "+furthestPart.partInfo.title);
+					//Log.dbg ("Furthest Part: "+furthestPart.partInfo.title);
 
 					Vector3 furthestVert = vessel.CoM;
 					float furthestSqrDist = -1;
@@ -769,7 +774,7 @@ namespace VesselMover
 
 					Vector3 radVector = Vector3.ProjectOnPlane(furthestVert-vessel.CoM, up);
 					radius = radVector.magnitude;
-					//Debug.Log ("Vert test found radius to be "+radius);
+					//Log.dbg ("Vert test found radius to be "+radius);
 				}
 				*/
         //radius *= 1.75f;
