@@ -1,5 +1,8 @@
 # Vessel Mover :: Change Log
 
+* 2019-0609: 1.7.5 (jrodriguez) for KSP 1.7
+	+ New:
+		- Recompiled for KSP 1.7.1
 * 2019-0422: 1.7.4 (jrodriguez) for KSP 1.7
 	+ New:
 		- Recompiled for KSP 1.7
