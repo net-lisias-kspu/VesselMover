@@ -1,5 +1,10 @@
 # Vessel Mover :: Change Log
 
+* 2016-1110: 1.5.1.3 (Papa_Joe) for KSP 1.2
+	+ 1.2.1 recompile
+	+ adding ignore gforces call on move to stabalize vessels while moving
+	+ Throttle up/down will now add/decrease altitude on move
+	+ Fixed: issue of vessel spawn in 1.2 would ignore water detection and spawn vessel on ocean floor
 * 2016-0916: 1.5.1.2 (Papa_Joe) for KSP 1.1.3 PRE-RELEASE
 	+ Updated to be compatible with KSP 1.2pr.  This is prerelease software.  not for official distribution.
 * 2016-0808: 1.5.1.1 (Papa_Joe) for KSP 1.1.3
