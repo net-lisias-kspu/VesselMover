@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VesselMover")]
+[assembly: AssemblyTitle("VesselMover /L Unofficial")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BahamutoD")]
+[assembly: AssemblyCompany("Lisias")]
 [assembly: AssemblyProduct("VesselMover")]
-[assembly: AssemblyCopyright("Copyright ©  2014-2020")]
+[assembly: AssemblyCopyright("Copyright © 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.9.0.0")]
-[assembly: AssemblyFileVersion("1.9.0.0")]
+[assembly: AssemblyVersion(VesselMover.Version.Number)]
+[assembly: AssemblyFileVersion(VesselMover.Version.Number)]
+[assembly: KSPAssembly("VesselMover", VesselMover.Version.major, VesselMover.Version.minor)]
+[assembly: KSPAssemblyDependency("KSPe", 2, 1)]
