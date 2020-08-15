@@ -1,5 +1,7 @@
 # Vessel Mover :: Change Log
 
+* 2016-0808: 1.5.1.1 (Papa_Joe) for KSP 1.1.3
+	+ Fixed Git Issue #1 Vessels taking fall damage when placed.  Added new vessel movement mode that allows Fine control and low altitude (5 meters) placement.  Should eliminate fall damage.
 * 2016-0724: 1.5.1 (Papa_Joe) for KSP 1.1.3
 	+ KSP 1.1.3 compatibility
 	+ Fixed: Bug in Spawn Vessel where kerbal created was type Unowned.  would get lost and would disappear.  Changed to Type Crew.
