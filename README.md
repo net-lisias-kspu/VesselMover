@@ -44,6 +44,7 @@ Released under [MIT](https://opensource.org/licenses/MIT). See [here](./LICENSE)
 
 Please note the copyrights and trademarks in [NOTICE](./NOTICE)
 
+Vessel spawner code is a modified version of SpawnVessel by nightingale (Contract Configurator)
 
 ## UPSTREAM
 
