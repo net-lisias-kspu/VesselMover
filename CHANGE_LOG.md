@@ -1,5 +1,9 @@
 # Vessel Mover :: Change Log
 
+* 2018-0426: 1.7.2 (Papa_Joe) for KSP 1.4.2
+	+ 1.7.2
+		- Add altitude adjust keys to help window.
+		- Add drop feature to Vessel Move.  Git Issue #3  Click Drop to allow vessel to free fall.
 * 2018-0326: 1.7.1 (Papa_Joe) for KSP 1.4.1
 	+ Add ability to move Vessel Mover main window. Git Issues #13 and #42
 	+ Correct issue with Vessel Selection where the wrong game save folder is used.  Git Issue #31
