@@ -55,3 +55,6 @@ Vessel spawner code is a modified version of SpawnVessel by nightingale (Contrac
 	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/144421-*) 
 	+ [SpaceDock](https://spacedock.info/mod/860/VesselMover)
 	+ [Github](https://github.com/PapaJoesSoup/VesselMover/)
+* [jrodriguez](https://forum.kerbalspaceprogram.com/index.php?/profile/130617-jrodriguez/) CURRENT
+	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/183963-*) 
+	+ [Github](https://github.com/jrodrigv/VesselMover/releases)
