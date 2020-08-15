@@ -1,5 +1,12 @@
 # Vessel Mover :: Change Log
 
+* 2018-0514: 1.7.3 (Papa_Joe) for KSP 1.4.5
+	+ Add Crew selection screen to spawn feature.  You can now (optionally) select one crewmember from a list of available crew. Git Issue #17
+	+ Fixed Tab key movement mode changes to prevent positioning craft underground. Git Issue #29
+	+ Clean up tool tips to display above window and not beyond edge of screen.
+	+ Improved control of altitude during movement mode changes. Now when changing altitudes, changes to movement mode will not alter current altitude.
+	+ Added new Movement Mode altitude reset key Throttle Cuttoff (Default is X) to allow for flexible altitude positioning.
+	+ Revised help and readme to reflect changes to hot keys.
 * 2018-0427: 1.7.2.2 (Papa_Joe) for KSP 1.4.2
 	+ Recompiled for KSP 1.4.3  Works in 1.4.x
 	+ Fined tuned altitude adjustment for better behavior at low speed modes.
