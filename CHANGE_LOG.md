@@ -1,5 +1,7 @@
 # Vessel Mover :: Change Log
 
+* 2016-0916: 1.5.1.2 (Papa_Joe) for KSP 1.1.3 PRE-RELEASE
+	+ Updated to be compatible with KSP 1.2pr.  This is prerelease software.  not for official distribution.
 * 2016-0808: 1.5.1.1 (Papa_Joe) for KSP 1.1.3
 	+ Fixed Git Issue #1 Vessels taking fall damage when placed.  Added new vessel movement mode that allows Fine control and low altitude (5 meters) placement.  Should eliminate fall damage.
 * 2016-0724: 1.5.1 (Papa_Joe) for KSP 1.1.3
