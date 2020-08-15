@@ -1,5 +1,7 @@
 # Vessel Mover :: Change Log
 
+* 2016-0724: 1.5.0 (Papa_Joe) for KSP 0.7.3
+	+ No changelog provided
 * 2016-0425: 1.5 (BahamutoD) for KSP 0.7.3
 	+ KSP 1.1 compatibility
 * 2016-0304: 1.4 (BahamutoD) for KSP 0.90
