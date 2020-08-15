@@ -1,5 +1,7 @@
 # Vessel Mover :: Change Log
 
+* 2017-0706: 1.6.1 (Papa_Joe) for KSP 1.2
+	+ Adding option to not spawn crew.
 * 2017-0602: 1.6.0 (Papa_Joe) for KSP 1.2
 	+ No changelog provided
 * 2016-1110: 1.5.1.3 (Papa_Joe) for KSP 1.2
