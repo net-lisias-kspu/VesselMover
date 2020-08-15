@@ -38,6 +38,9 @@
     <Compile Include="VesselMoverToolbar.cs" />
     <Compile Include="VMUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MoveLaunch\MoveLaunch.cs" />
+    <Compile Include="MoveLaunch\MoveLaunchGPSLogger.cs" />
+    <Compile Include="MoveLaunch\MoveLaunchMassModifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
