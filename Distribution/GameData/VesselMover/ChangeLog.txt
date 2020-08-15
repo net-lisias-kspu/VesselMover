@@ -1,0 +1,80 @@
+v1.7.3
+ - Add Crew selection screen to spawn feature.  You can now (optionally) select one crewmember from a list of available crew. Git Issue #17
+ - Fixed Tab key movement mode changes to prevent positioning craft underground. Git Issue #29  
+ - Clean up tool tips to display above window and not beyond edge of screen.
+ - Improved control of altitude during movement mode changes. Now when changing altitudes, changes to movement mode will not alter current altitude.  
+ - Added new Movement Mode altitude reset key Throttle Cuttoff (Default is X) to allow for flexible altitude positioning.
+ - Revised help and readme to reflect changes to hot keys.
+
+v1.7.2.2
+ - Recompiled for KSP 1.4.3  Works in 1.4.x
+ - Fined tuned altitude adjustment for better behavior at low speed modes.
+
+v1.7.2.1
+ - Altered altitude adjustment to account for speed modes.  Height changes now vary with the mode.
+ - Fixed:  Choose Crew toggle not implemented yet.  Changed to hidden for now.
+ 
+v1.7.2
+ - Add altitude adjust keys to help window.
+ - Add drop feature to Vessel Move.  Git Issue #3  Click Drop to allow vessel to free fall.
+ 
+v1.7.1
+ - Add ability to move Vessel Mover main window. Git Issues #13 and #42
+ - Correct issue with Vessel Selection where the wrong game save folder is used.  Git Issue #31
+ - Make Window display honor show/hide UI display in flight.  Git issue #44
+
+v1.7
+- 1.4 recompile and upgraded to latest Unity
+- Updated AppLaungher toolbar button to support new Unity Compression.  Increased icon size to 128 x 128
+
+v1.5.1.4
+- 1.2.2 recompile
+- closing issue #21 - vessel dropping below current altitude during move
+
+v1.5.1.3
+- 1.2.1 recompile
+- adding ignore gforces call on move to stabalize vessels while moving
+- Throttle up/down will now add/decrease altitude on move
+- Fixed: issue of vessel spawn in 1.2 would ignore water detection and spawn vessel on ocean floor
+
+v1.5.1.2beta
+- Updated to be compatible with KSP 1.2pr.  This is prerelease software.  not for official distribution.
+
+v1.5.1.1
+- Fixed Git Issue #1 Vessels taking fall damage when placed.  Added new vessel movement mode that allows Fine control and low altitude (5 meters) placement.  Should eliminate fall damage.
+
+v1.5.1
+- KSP 1.1.3 compatibility
+- Fixed: Bug in Spawn Vessel where kerbal created was type Unowned.  would get lost and would disappear.  Changed to Type Crew.
+
+v1.5
+- KSP 1.1 compatibility
+
+v1.4
+- Toolbar menu
+- Disabled alt-p hotkey (please use toolbar UI)
+- Vessel spawner (experimental)
+
+v1.3
+- Prevent pickup when vessel is packed (causes vessel to drop when released)
+
+v1.2
+- Added functions to auto-level planes and rockets (Translate fwd/back keys, H and N default)
+- Launch clamps will automatically release when you attempt to pick up a craft that is clamped
+- Fixed controls inverting when looking straight down
+- Tweaked surface detection radius
+
+v1.1
+- Added change log
+- Added slow and ludicrous speed modes (press tab to toggle)
+- Added other rotational axes (QE is now roll, IK is pitch JL is yaw)
+- Changed input bindings to use your settings for attitude and translation control to support non-QWERTY keyboards
+- Changed controls to follow cardinal directions when in map mode
+- Fixed surface relative rotation
+- Fixed and improved vessel size calculations
+- Vessel size calculations update when vessel is rotated
+- Smoother pick-up action
+- Faster yet more gentle put-down action
+
+v1.0
+- Release
