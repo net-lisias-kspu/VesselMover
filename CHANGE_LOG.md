@@ -1,5 +1,9 @@
 # Vessel Mover :: Change Log
 
+* 2016-0724: 1.5.1 (Papa_Joe) for KSP 1.1.3
+	+ KSP 1.1.3 compatibility
+	+ Fixed: Bug in Spawn Vessel where kerbal created was type Unowned.  would get lost and would disappear.  Changed to Type Crew.
+	+ Continuation of BahamutoD's work.
 * 2016-0724: 1.5.0 (Papa_Joe) for KSP 0.7.3
 	+ No changelog provided
 * 2016-0425: 1.5 (BahamutoD) for KSP 0.7.3
