@@ -50,3 +50,7 @@ Please note the copyrights and trademarks in [NOTICE](./NOTICE)
 * [BahamutoD](https://forum.kerbalspaceprogram.com/index.php?/profile/72433-bahamutod/) ROOT
 	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/123646-*)
 	+ [GitHub](https://github.com/BahamutoD/VesselMover/)
+* [Papa_Joe](https://forum.kerbalspaceprogram.com/index.php?/profile/10788-papa_joe/) PARENT
+	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/144421-*) 
+	+ [SpaceDock](https://spacedock.info/mod/860/VesselMover)
+	+ [Github](https://github.com/PapaJoesSoup/VesselMover/)
