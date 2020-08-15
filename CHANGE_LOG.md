@@ -1,5 +1,9 @@
 # Vessel Mover :: Change Log
 
+* 2018-0326: 1.7.1 (Papa_Joe) for KSP 1.4.1
+	+ Add ability to move Vessel Mover main window. Git Issues #13 and #42
+	+ Correct issue with Vessel Selection where the wrong game save folder is used.  Git Issue #31
+	+ Make Window display honor show/hide UI display in flight.  Git issue #44
 * 2018-0326: 1.7 (Papa_Joe) for KSP 1.4.1
 	+ 1.4 recompile and upgraded to latest Unity
 	+ Updated AppLauncher toolbar button to support new Unity Compression.  Increased icon size to 128 x 128
