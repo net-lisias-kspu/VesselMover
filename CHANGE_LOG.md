@@ -1,5 +1,8 @@
 # Vessel Mover :: Change Log
 
+* 2019-1022: 1.8.0 (jrodriguez) for KSP 1.7.1
+	+ Recompiled for KSP 1.8.0
+	+ Fixes issue regarding vessel with robotic arms causing infinite flying off
 * 2019-0609: 1.7.5 (jrodriguez) for KSP 1.7
 	+ New:
 		- Recompiled for KSP 1.7.1
