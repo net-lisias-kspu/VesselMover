@@ -1,5 +1,8 @@
 # Vessel Mover :: Change Log
 
+* 2018-0427: 1.7.2.2 (Papa_Joe) for KSP 1.4.2
+	+ Recompiled for KSP 1.4.3  Works in 1.4.x
+	+ Fined tuned altitude adjustment for better behavior at low speed modes.
 * 2018-0426: 1.7.2.1 (Papa_Joe) for KSP 1.4.2
 	+ Altered altitude adjustment to account for speed modes.  Height changes now vary with the mode.
 	+ Fixed:  Choose Crew toggle not implemented yet.  Changed to hidden for now.
