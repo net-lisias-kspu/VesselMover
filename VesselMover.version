@@ -1,0 +1,18 @@
+{
+	"NAME"		: "Vessel Mover /L Unofficial",
+	"URL"		: "https://raw.githubusercontent.com/net-lisias-kspu/VesselMover/master/VesselMover.version",
+	"DOWNLOAD"	: "https://github.com/net-lisias-kspu/VesselMover/releases",
+	"CHANGE_LOG"	: "https://raw.githubusercontent.com/net-lisias-kspu/VesselMover/master/CHANGE_LOG.md",
+	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/net-lisias-kspu/VesselMover/master/CHANGES.md",
+	"VERSION":{
+		"MAJOR":1,
+		"MINOR":9,
+		"PATCH":0,
+		"BUILD":0
+		},
+	"KSP_VERSION_MIN":{
+		"MAJOR":1,
+		"MINOR":4,
+		"PATCH":1
+		}
+}
