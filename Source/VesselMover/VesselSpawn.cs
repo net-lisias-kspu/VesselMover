@@ -390,7 +390,14 @@ namespace VesselMover
             dummyVessel.loaded = false;
             p.vessel = dummyVessel;
 
-          dummyProto.protoPartSnapshots.Add(new ProtoPartSnapshot(p, dummyProto,true));
+            {
+#if KSP_18
+                ProtoPartSnapshot proto = new ProtoPartSnapshot(p, dummyProto, true)); // For KSP >= 1.8
+#else 
+                ProtoPartSnapshot proto = new ProtoPartSnapshot(p, dummyProto);      // For KSP 1.4.x
+#endif
+                dummyProto.protoPartSnapshots.Add(proto);
+            }
         }
         foreach (ProtoPartSnapshot p in dummyProto.protoPartSnapshots)
         {
