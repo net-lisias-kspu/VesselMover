@@ -1,5 +1,10 @@
 # Vessel Mover :: Change Log
 
+* 2021-1028: 1.9.0.2 (LisiasT) for [1.4.1 <= KSP <= 1.7.3] 
+	+ Updating support for KSPe.UI v2.4
+		+ Abstract UI
+		+ Toolbar
+	+ KSP 1.8 and newer are still properly untested, however - but appears to work on the few times I used it. 
 * 2020-0815: 1.9.0.1 (LisiasT) for [1.4.1 <= KSP <= 1.7.3]
 	+ Adding KSPe facilities
 		- No more blurred icons
