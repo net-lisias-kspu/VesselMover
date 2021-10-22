@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VesselMover /L Unofficial")]
+[assembly: AssemblyTitle("VesselMover /L Unleashed")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Lisias")]
-[assembly: AssemblyProduct("VesselMover")]
-[assembly: AssemblyCopyright("Copyright © 2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(VesselMover.LegalMamboJambo.Company)]
+[assembly: AssemblyProduct(VesselMover.LegalMamboJambo.Product)]
+[assembly: AssemblyCopyright(VesselMover.LegalMamboJambo.Copyright)]
+[assembly: AssemblyTrademark(VesselMover.LegalMamboJambo.Trademark)]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,4 +32,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion(VesselMover.Version.Number)]
 [assembly: AssemblyFileVersion(VesselMover.Version.Number)]
 [assembly: KSPAssembly("VesselMover", VesselMover.Version.major, VesselMover.Version.minor)]
-[assembly: KSPAssemblyDependency("KSPe", 2, 1)]
+[assembly: KSPAssemblyDependency("KSPe", 2, 4)]
+[assembly: KSPAssemblyDependency("KSPe.UI", 2, 4)]

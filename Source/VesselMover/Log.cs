@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+	This file is part of VesselMover /L
+		© 2020-2021 LisiasT
+		© 2019-2020 jrodriguez
+		© 2016-2018 Papa_Joe
+		© 2015-2016 BahamutoD
+
+	THIS FILE is licensed to you under:
+
+	* WTFPL - http://www.wtfpl.net
+		* Everyone is permitted to copy and distribute verbatim or modified
+			copies of this license document, and changing it is allowed as long
+			as the name is changed.
+
+	THIS FILE is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+using System;
 using KSPe.Util.Log;
 using System.Diagnostics;
 
@@ -11,17 +29,6 @@ namespace VesselMover
     internal static class Log
     {
         private static readonly Logger log = Logger.CreateForType<Startup>();
-
-        internal static void init()
-        {
-            log.level =
-#if DEBUG
-                Level.TRACE
-#else
-                Level.INFO
-#endif
-                ;
-        }
 
         internal static void force (string msg, params object [] @params)
         {
