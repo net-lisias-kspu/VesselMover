@@ -22,13 +22,18 @@
 	You should have received a copy of the GNU General Public License 2.0
 	along with VesselMover /L If not, see <https://www.gnu.org/licenses/>.
 */
-using KSP.UI.Screens;
 using UnityEngine;
+
 using System.Collections;
 using System;
 using System.Collections.Generic;
 
+using KSP.UI.Screens;
+
+using GUI = KSPe.UI.GUI;
+using GUILayout = KSPe.UI.GUILayout;
 using PluginData = KSPe.IO.File<VesselMover.Startup>.Asset;
+
 
 namespace VesselMover
 {

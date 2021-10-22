@@ -26,7 +26,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using KSP.UI.Screens;
 
+using GUI = KSPe.UI.GUI;
+using GUILayout = KSPe.UI.GUILayout;
 using PluginData = KSPe.IO.File<VesselMover.Startup>.Asset;
+using Toolbar = KSPe.UI.Toolbar;
+
 
 namespace VesselMover
 {
@@ -79,6 +83,7 @@ namespace VesselMover
 
     private void OnDestroy()
     {
+      ToolbarController.Instance.Destroy();
       GameEvents.onHideUI.Remove(OnHideUI);
       GameEvents.onShowUI.Remove(OnShowUI);
     }
@@ -255,6 +260,7 @@ namespace VesselMover
       GUI.Label(LineRect(ref line), label, HighLogic.Skin.label);
     }
 
+    private Toolbar.Button button;
     private void AddToolbarButton()
     {
       if (HighLogic.LoadedSceneIsFlight)
@@ -262,8 +268,14 @@ namespace VesselMover
         if (!hasAddedButton)
         {
           string texpath = PluginData.Solve("Textures", "icon");
-          Texture buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
-          ApplicationLauncher.Instance.AddModApplication(ShowToolbarGUI, HideToolbarGUI, Dummy, Dummy, Dummy, Dummy, ApplicationLauncher.AppScenes.FLIGHT, buttonTexture);
+          Texture2D buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
+          this.button = Toolbar.Button.Create(this
+              , ApplicationLauncher.AppScenes.FLIGHT
+              , buttonTexture
+              , buttonTexture
+            );
+          this.button.Toolbar.Add(Toolbar.Button.ToolbarEvents.Kind.Active, new Toolbar.Button.Event(ShowToolbarGUI, HideToolbarGUI));
+          ToolbarController.Instance.Add(button);
           hasAddedButton = true;
         }
       }

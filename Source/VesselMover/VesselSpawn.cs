@@ -26,9 +26,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using KSP.UI;
 using UnityEngine;
 using KSP.UI.Screens;
+
+using GUI = KSPe.UI.GUI;
+using GUILayout = KSPe.UI.GUILayout;
 
 
 namespace VesselMover
