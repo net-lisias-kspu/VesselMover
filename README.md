@@ -40,7 +40,7 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 
 ### License:
 
-* Haystack /L is double licensed as follows:
+* Vessel Mover /L is double licensed as follows:
 	+ [SKL 1.0](https://ksp.lisias.net/SKL-1_0.txt). See [here](./LICENSE.SKL-1_0)
 		+ You are free to:
 			- Use : unpack and use the material in any computer or device
