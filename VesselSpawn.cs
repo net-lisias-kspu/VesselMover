@@ -329,13 +329,13 @@ namespace VesselMover
         {
           vesselData.name = shipConstruct.shipName;
         }
-
+        
         // Set some parameters that need to be at the part level
         uint missionID = (uint)Guid.NewGuid().GetHashCode();
         uint launchID = HighLogic.CurrentGame.launchID++;
         foreach (Part p in shipConstruct.parts)
         {
-          p.flightID = ShipConstruction.GetUniqueFlightID(HighLogic.CurrentGame.flightState);
+            p.flightID = ShipConstruction.GetUniqueFlightID(HighLogic.CurrentGame.flightState);
           p.missionID = missionID;
           p.launchID = launchID;
           p.flagURL = vesselData.flagURL ?? HighLogic.CurrentGame.flagURL;
@@ -345,7 +345,7 @@ namespace VesselMover
           // value.
           p.temperature = 1.0;
         }
-
+        
         //add minimal crew
         //bool success = false;
         Part part = shipConstruct.parts.Find(p => p.protoModuleCrew.Count < p.CrewCapacity);
@@ -381,13 +381,16 @@ namespace VesselMover
         ConfigNode empty = new ConfigNode();
         ProtoVessel dummyProto = new ProtoVessel(empty, null);
         Vessel dummyVessel = new Vessel();
-        dummyVessel.parts = shipConstruct.parts;
+        dummyVessel.parts = shipConstruct.Parts;
         dummyProto.vesselRef = dummyVessel;
 
         // Create the ProtoPartSnapshot objects and then initialize them
         foreach (Part p in shipConstruct.parts)
         {
-          dummyProto.protoPartSnapshots.Add(new ProtoPartSnapshot(p, dummyProto));
+            dummyVessel.loaded = false;
+            p.vessel = dummyVessel;
+
+          dummyProto.protoPartSnapshots.Add(new ProtoPartSnapshot(p, dummyProto,true));
         }
         foreach (ProtoPartSnapshot p in dummyProto.protoPartSnapshots)
         {

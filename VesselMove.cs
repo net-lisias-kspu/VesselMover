@@ -295,10 +295,37 @@ namespace VesselMover
       _currMoveVelocity = offset / Time.fixedDeltaTime;
       Vector3 vSrfPt = MovingVessel.CoM - (MoveHeight * _up);
       bool srfBelowWater = false;
-      RaycastHit ringHit;
+      RaycastHit ringHit = default;
 
-      bool surfaceDetected = CapsuleCast(out ringHit);
+
+      bool surfaceDetected = false;
+      var rayCastHits= CapsuleCast();
+
+
+      Array.Sort(rayCastHits, (r1, r2) => r1.distance.CompareTo(r2.distance));
+
+      foreach (var hit in rayCastHits)
+      {
+          var partHit = hit.collider.gameObject.GetComponentInParent<Part>();
+
+          if (partHit == null)
+          {
+              ringHit = hit;
+              surfaceDetected = true;
+              break;
+          }
+
+          if (partHit?.vessel == MovingVessel) continue;
+
+
+          ringHit = hit;
+          surfaceDetected = true;
+          break;
+      }
+
       Vector3 finalOffset = Vector3.zero;
+
+            
 
       if (surfaceDetected)
       {
@@ -534,12 +561,12 @@ namespace VesselMover
       return point;
     }
 
-    private bool CapsuleCast(out RaycastHit rayHit)
+    private RaycastHit[] CapsuleCast()
     {
       //float radius = (Mathf.Max (Mathf.Max(vesselBounds.size.x, vesselBounds.size.y), vesselBounds.size.z)) + (currMoveSpeed*2);
       float radius = _vBounds.Radius + Mathf.Clamp(_currMoveSpeed, 0, 200);
 
-      return Physics.CapsuleCast(MovingVessel.CoM + (250 * _up), MovingVessel.CoM + (249 * _up), radius, -_up, out rayHit, 2000, 1 << 15);
+      return Physics.CapsuleCastAll(MovingVessel.CoM + (250 * _up), MovingVessel.CoM + (249 * _up), radius, -_up, 2000, 1 << 15);
     }
 
     private float GetRadarAltitude(Vessel vessel)
