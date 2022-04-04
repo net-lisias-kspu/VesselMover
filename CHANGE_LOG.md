@@ -1,5 +1,9 @@
 # Vessel Mover :: Change Log
 
+* 2021-1028: 1.9.0.3 (LisiasT) for KSP >= 1.4.1
+	+ **Finally** fixes a very stupid mistake on handling the Toolbar life cycle
+		- Geez, I hate static variables...
+	+ The thing was properly tested up to KSP 1.12.3 
 * 2021-1028: 1.9.0.2 (LisiasT) for [1.4.1 <= KSP <= 1.7.3] 
 	+ Updating support for KSPe.UI v2.4
 		+ Abstract UI
