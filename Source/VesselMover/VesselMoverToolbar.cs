@@ -37,7 +37,6 @@ namespace VesselMover
   [KSPAddon(KSPAddon.Startup.Flight, false)]
   public class VesselMoverToolbar : MonoBehaviour
   {
-    public static bool hasAddedButton = false;
     public static bool toolbarGuiEnabled = false;
     public static bool addCrewMembers = true;
     public static bool selectCrewMembers = false;
@@ -260,12 +259,12 @@ namespace VesselMover
       GUI.Label(LineRect(ref line), label, HighLogic.Skin.label);
     }
 
-    private Toolbar.Button button;
+    private Toolbar.Button button = null;
     private void AddToolbarButton()
     {
       if (HighLogic.LoadedSceneIsFlight)
       {
-        if (!hasAddedButton)
+        if (null == this.button)
         {
           string texpath = PluginData.Solve("Textures", "icon");
           Texture2D buttonTexture = KSPe.Util.Image.Texture2D.LoadFromFile(texpath);
@@ -276,7 +275,6 @@ namespace VesselMover
             );
           this.button.Toolbar.Add(Toolbar.Button.ToolbarEvents.Kind.Active, new Toolbar.Button.Event(ShowToolbarGUI, HideToolbarGUI));
           ToolbarController.Instance.Add(button);
-          hasAddedButton = true;
         }
       }
     }
