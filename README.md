@@ -61,10 +61,11 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 			- You don't impersonate the authors, neither redistribute a derivative that could be misrepresented as theirs.
 			- You credit the author and republish the copyright notices on your works where the code is used.
 			- You relicense (and fully comply) your works using GPL 2.0
+				- Please note that upgrading the license to GPLv3 **IS NOT ALLOWED** for this work, as the author **DID NOT** added the "or (at your option) any later version" on the license.
 			- You don't mix your work with GPL incompatible works.
 	+ If by some reason the GPL would be invalid for you, rest assured that you still retain the right to Use the Work under SKL 1.0. 
 
-VesselMover Continued and previous are still available under the [MIT](https://opensource.org/licenses/MIT), and can be found on [this branch](https://github.com/net-lisias-kspu/VesselMover/tree/Source/MIT) (and on the previous maintainer's repository, see below).
+VesselMover Continued and previous are still available under the [MIT](https://opensource.org/licenses/MIT), and can be found on [this branch](https://github.com/net-lisias-kspu/VesselMover/tree/Source/MIT) (and on the previous maintainer's repository, see below). Please note this [statement](https://www.gnu.org/licenses/license-list.en.html#Expat) from FSF.
 
 Please note the copyrights and trademarks in [NOTICE](./NOTICE)
 
